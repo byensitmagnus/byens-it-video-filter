@@ -2,11 +2,10 @@
 
 Screenshots for the Chrome Web Store listing of **Creator Video Filter for TikTok**.
 
-> **STATUS: not yet captured.** This folder currently contains only this guide — no
-> image files. The Chrome Web Store requires **at least one** screenshot, so capturing
-> these is the one hard blocker before submission. Do **not** ship placeholder/fake
-> images; capture real ones with the steps below (ideally after loading the v3.2.0
-> build so the new badge legend and data-quality hints are visible).
+> **STATUS: captured ✅ (2026-06-09, v3.2.0 build).** All six shots exist in this
+> folder at exactly 1280×800 PNG, taken live on TikTok Studio with the panel open
+> (289 videos, badges, legend, save-rate data). Re-capture with the steps below
+> whenever the UI changes meaningfully.
 
 ## Required sizes
 

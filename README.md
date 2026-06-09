@@ -16,9 +16,9 @@ Sort, rank, and understand your own TikTok videos locally — no account linking
 
 ## Screenshot
 
-> 📸 Screenshots are captured per the guide in [`store/screenshots/`](store/screenshots/README.md).
-> Once `store/screenshots/panel.png` exists it renders here automatically — the analytics
-> panel overlaid on TikTok, showing your top videos, badges, and sorting controls.
+![Creator Video Filter analytics panel](store/screenshots/panel.png)
+
+*The analytics panel overlaid on TikTok Studio — your top videos ranked by score, with badges, period filter, and sorting controls. More shots in [`store/screenshots/`](store/screenshots/README.md).*
 
 ---
 
