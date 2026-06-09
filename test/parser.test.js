@@ -57,6 +57,13 @@ test("hashtagsOf parses hashtags, lowercased, without the #", () => {
   assert.deepStrictEqual(parser.hashtagsOf("no tags here"), []);
 });
 
+test("repurposeText builds a clean caption + hashtags pack", () => {
+  assert.strictEqual(parser.repurposeText("Boost FPS now #fps #Gaming"), "Boost FPS now\n\n#fps #gaming");
+  assert.strictEqual(parser.repurposeText("plain title, no tags"), "plain title, no tags");
+  assert.strictEqual(parser.repurposeText(""), "");
+  assert.strictEqual(parser.repurposeText("#only #tags"), "\n\n#only #tags");
+});
+
 test("parses shorthand numbers like 1.2K / 3M", () => {
   assert.strictEqual(parser.num("1.2K"), 1200);
   assert.strictEqual(parser.num("3M"), 3000000);

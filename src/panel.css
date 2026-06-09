@@ -89,7 +89,8 @@ a.bitvf-vtitle:hover { color: #a78bfa; text-decoration: underline; }
 .bitvf-actions { margin-top: 5px; display: flex; gap: 5px; }
 .bitvf-act { background: var(--bg3); color: var(--muted); border: 1px solid var(--border2); border-radius: 6px; padding: 2px 7px; font-size: 11px; cursor: pointer; line-height: 1.4; }
 .bitvf-act:hover { color: var(--text); border-color: #4f5468; }
-.bitvf-repbtn { font-size: 10px; color: #34d399; }
+.bitvf-repbtn { font-size: 10px; color: #34d399; display: block; margin: 3px 0 0 auto; }
+.bitvf-repnow { font-size: 10px; color: #a78bfa; display: block; margin-left: auto; }
 
 .bitvf-m { text-align: right; font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; }
 .bitvf-m .bitvf-sub { display: block; font-size: 9px; font-weight: 500; color: var(--muted2); margin-top: 1px; }

@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.3.0] - 2026-06-09
+
+### Added
+- **↻ Repost button (assisted repost flow).** Each Repost Radar candidate now has a
+  one-click "↻ Repost" that copies the video's caption + hashtags to the clipboard and
+  opens TikTok Studio's Upload page in a new tab — pick your video file, paste the
+  caption, publish, then mark "✓ Reposted". Fully automatic reposting is intentionally
+  NOT possible: it would require TikTok's posting API (login/OAuth), which conflicts
+  with the extension's privacy-first, no-login principle.
+
+### Notes
+- Still 100% local — the button only writes to your clipboard and opens a tiktok.com tab.
+
 ## [3.2.1] - 2026-06-09
 
 ### Fixed

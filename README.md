@@ -29,7 +29,7 @@ Sort, rank, and understand your own TikTok videos locally — no account linking
 - **Save-rate Leaderboard** — rank videos by save-rate with percentile badges.
 - **Posting Times** — a 7×24 heatmap built from your post timestamps to spot your best windows.
 - **Hashtags & Sounds** — performance breakdown by hashtag and sound.
-- **Repost Radar** — surfaces older videos worth reposting.
+- **Repost Radar** — surfaces older videos worth reposting, with a one-click **↻ Repost** (copies the caption + hashtags and opens TikTok Upload) and **✓ Reposted** tracking.
 - **Trends** — compare periods and spot view-velocity "sleeper hits".
 - **Watchlist** — keep an eye on specific videos over time.
 

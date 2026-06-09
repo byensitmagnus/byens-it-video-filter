@@ -278,10 +278,12 @@
     cands.forEach(function (r) { r._ever = r.saveRate * Math.min((r.ageDays || 0) / 30, 4) * (1 + r.pSaves); });
     cands.sort(function (a, b) { return b._ever - a._ever; });
     countEl.textContent = cands.length + " repost candidates";
-    var tip = '<div class="bitvf-tip">🔁 Older videos with a high save-rate that people still save — strong to repost. Click <b>✓ Reposted</b> once you have.</div>';
+    var tip = '<div class="bitvf-tip">🔁 Older videos with a high save-rate that people still save — strong to repost. <b>↻ Repost</b> copies the caption and opens TikTok Upload; click <b>✓ Reposted</b> once it\'s published.</div>';
     if (!cands.length) { bodyEl.innerHTML = tip + '<div class="bitvf-empty"><p>No clear repost candidates right now.</p></div>'; return; }
     bodyEl.innerHTML = tip + cands.slice(0, 40).map(function (r, i) {
-      var cols = '<div class="bitvf-m bitvf-m-save">' + pct(r.saveRate) + '</div><div class="bitvf-m">' + fmt(r.saves) + '</div><div class="bitvf-m"><button class="bitvf-act bitvf-repbtn" data-act="reposted" data-id="' + r.id + '">✓ Reposted</button></div>';
+      var cols = '<div class="bitvf-m bitvf-m-save">' + pct(r.saveRate) + '</div><div class="bitvf-m">' + fmt(r.saves) + '</div><div class="bitvf-m">' +
+        '<button class="bitvf-act bitvf-repnow" data-act="repostnow" data-id="' + r.id + '" title="Copy caption + hashtags and open TikTok Upload in a new tab">↻ Repost</button>' +
+        '<button class="bitvf-act bitvf-repbtn" data-act="reposted" data-id="' + r.id + '" title="Mark as reposted (hides it from the radar for 45 days)">✓ Reposted</button></div>';
       return videoRow(r, i, cols);
     }).join("");
   }
@@ -315,15 +317,21 @@
     if (act === "watch") { S.setWatch(id, !S.isWatched(id)); render(); }
     else if (act === "cover") { X.downloadCover(rec, function (ok) { toast(ok ? "Cover downloaded ⬇" : "Couldn't download cover"); }); }
     else if (act === "repurpose") { repurpose(rec); }
+    else if (act === "repostnow") { repostNow(rec); }
     else if (act === "reposted") { S.markReposted(id); toast("Marked as reposted ✓"); render(); }
   }
   function findRecord(id) { var l = S.ownVideos(); for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
   function repurpose(r) {
-    var tags = P.hashtagsOf(r.title);
-    var clean = (r.title || "").replace(/#[\p{L}\p{N}_]+/gu, "").replace(/\s+/g, " ").trim();
-    var packText = clean + "\n\n" + tags.map(function (t) { return "#" + t; }).join(" ");
-    try { navigator.clipboard.writeText(packText).then(function () { toast("Title + hashtags copied ↗ (ready for Reels/Shorts)"); }, function () { toast("Couldn't copy"); }); }
+    try { navigator.clipboard.writeText(P.repurposeText(r.title)).then(function () { toast("Title + hashtags copied ↗ (ready for Reels/Shorts)"); }, function () { toast("Couldn't copy"); }); }
     catch (e) { toast("Couldn't copy"); }
+  }
+  // Assisteret repost: kopiér caption-pakken og åbn TikTok Upload i ny fane.
+  // Begge kald sker synkront i klik-handleren, så user-gesture gælder for både
+  // clipboard og window.open (ellers blokerer popup-blockeren).
+  function repostNow(r) {
+    try { navigator.clipboard.writeText(P.repurposeText(r.title)); } catch (e) {}
+    try { window.open("https://www.tiktok.com/tiktokstudio/upload", "_blank", "noopener"); } catch (e) {}
+    toast("Caption copied ↻ — choose your video in Upload, paste the caption, then mark ✓ Reposted here.");
   }
 
   // ---------- auto-scroll ----------

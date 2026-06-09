@@ -108,6 +108,13 @@
     return out;
   }
 
+  // Repurpose-/repost-pakke: ren titel + hashtags på egen linje (klar til paste).
+  function repurposeText(title) {
+    var tags = hashtagsOf(title);
+    var clean = (title || "").replace(/#[\p{L}\p{N}_]+/gu, "").replace(/\s+/g, " ").trim();
+    return clean + (tags.length ? "\n\n" + tags.map(function (t) { return "#" + t; }).join(" ") : "");
+  }
+
   // Forsøg at lave ét rå objekt om til en video-record. null hvis det ikke ligner.
   function asVideo(obj) {
     // Stat-container = stærkeste signal for "dette er en video". Bruges både til
@@ -187,7 +194,7 @@
   return {
     num: num, readMetric: readMetric, readId: readId, readTitle: readTitle, readTime: readTime,
     readCover: readCover, readAuthor: readAuthor, readMusic: readMusic, readDuration: readDuration,
-    hashtagsOf: hashtagsOf, asVideo: asVideo, walk: walk, extractVideos: extractVideos,
+    hashtagsOf: hashtagsOf, repurposeText: repurposeText, asVideo: asVideo, walk: walk, extractVideos: extractVideos,
     getWarnings: getWarnings, resetWarnings: resetWarnings, getStats: getStats
   };
 });
