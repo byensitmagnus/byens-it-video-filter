@@ -1,23 +1,11 @@
-/* Byens IT – Video Filter · panel.css
-   Alt er prefixet med .bitvf- og bruger høj z-index, så TikTok ikke påvirkes. */
+/* Byens IT – Video Filter · panel.css v2 · alt prefixet .bitvf- */
 
 .bitvf-fab {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 2147483000;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-  color: #fff;
-  font: 600 13px/1 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  letter-spacing: .2px;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(37, 99, 235, .35);
+  position: fixed; right: 18px; bottom: 18px; z-index: 2147483000;
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px;
+  border: none; border-radius: 999px; background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+  color: #fff; font: 600 13px/1 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: .2px; cursor: pointer; box-shadow: 0 6px 20px rgba(37, 99, 235, .35);
   transition: transform .12s ease, box-shadow .12s ease;
 }
 .bitvf-fab:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(37, 99, 235, .45); }
@@ -26,139 +14,110 @@
 .bitvf-logo { font-size: 11px; opacity: .9; }
 
 .bitvf-panel {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  bottom: 16px;
-  width: 420px;
-  max-width: calc(100vw - 32px);
-  z-index: 2147483001;
-  display: flex;
-  flex-direction: column;
-  background: #15161c;
-  color: #eef0f6;
-  border: 1px solid #2a2c38;
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
-  overflow: hidden;
+  --bg: #15161c; --bg2: #1b1d26; --bg3: #20222c; --border: #2a2c38; --border2: #2e313f;
+  --text: #eef0f6; --muted: #8a8fa3; --muted2: #767b91; --accentA: #7c3aed; --accentB: #2563eb;
+  position: fixed; top: 16px; right: 16px; bottom: 16px; width: 480px; max-width: calc(100vw - 32px);
+  z-index: 2147483001; display: flex; flex-direction: column;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .5); overflow: hidden;
   font: 13px/1.4 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.bitvf-panel.bitvf-light {
+  --bg: #ffffff; --bg2: #f5f6fa; --bg3: #eceef4; --border: #e2e5ee; --border2: #d6dae6;
+  --text: #1a1c24; --muted: #5b6173; --muted2: #767b91;
 }
 .bitvf-hidden { display: none !important; }
 
-.bitvf-head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 14px;
-  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-}
+.bitvf-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%); color: #fff; }
 .bitvf-title { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 7px; }
-.bitvf-x {
-  background: rgba(255, 255, 255, .15); color: #fff; border: none;
-  width: 26px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 13px;
-}
-.bitvf-x:hover { background: rgba(255, 255, 255, .3); }
+.bitvf-headbtns { display: flex; gap: 6px; }
+.bitvf-theme, .bitvf-x { background: rgba(255, 255, 255, .15); color: #fff; border: none; width: 26px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.bitvf-theme:hover, .bitvf-x:hover { background: rgba(255, 255, 255, .3); }
 
-.bitvf-controls { padding: 12px 14px 6px; }
-.bitvf-lbl { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #8a8fa3; margin-bottom: 7px; }
-.bitvf-sortbtns { display: flex; flex-wrap: wrap; gap: 6px; }
-.bitvf-sortbtns button {
-  background: #20222c; color: #c9cde0; border: 1px solid #2e313f;
-  padding: 6px 11px; border-radius: 999px; font-size: 12px; cursor: pointer; transition: all .12s ease;
-}
-.bitvf-sortbtns button:hover { border-color: #4f5468; background: #262936; }
-.bitvf-sortbtns button.active {
-  background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; border-color: transparent; font-weight: 600;
-}
+.bitvf-tabs { display: flex; gap: 2px; padding: 8px 10px 0; overflow-x: auto; border-bottom: 1px solid var(--border); }
+.bitvf-tabs::-webkit-scrollbar { height: 0; }
+.bitvf-tabs button { background: transparent; color: var(--muted); border: none; border-bottom: 2px solid transparent; padding: 7px 10px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.bitvf-tabs button:hover { color: var(--text); }
+.bitvf-tabs button.active { color: var(--text); border-bottom-color: #a78bfa; font-weight: 600; }
 
-.bitvf-period { padding-top: 4px; }
-.bitvf-periodbtns { display: flex; flex-wrap: wrap; gap: 6px; }
-.bitvf-periodbtns button {
-  background: #20222c; color: #c9cde0; border: 1px solid #2e313f;
-  padding: 6px 11px; border-radius: 999px; font-size: 12px; cursor: pointer; transition: all .12s ease;
-}
-.bitvf-periodbtns button:hover { border-color: #4f5468; background: #262936; }
-.bitvf-periodbtns button.active {
-  background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; border-color: transparent; font-weight: 600;
-}
-.bitvf-custom { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
-.bitvf-from, .bitvf-to {
-  background: #20222c; border: 1px solid #2e313f; color: #eef0f6;
-  padding: 6px 9px; border-radius: 8px; font-size: 12px; outline: none; color-scheme: dark;
-}
-.bitvf-from:focus, .bitvf-to:focus { border-color: #7c3aed; }
-.bitvf-dash { color: #767b91; }
+.bitvf-warn { margin: 8px 12px 0; padding: 7px 10px; background: rgba(245, 158, 11, .12); border: 1px solid rgba(245, 158, 11, .4); border-radius: 8px; color: #fbbf24; font-size: 11px; }
 
-.bitvf-meta { margin-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
-.bitvf-date { font-size: 10px; color: #8a8fa3; white-space: nowrap; }
+.bitvf-controls2 { display: flex; align-items: center; gap: 10px; padding: 10px 14px 6px; }
+.bitvf-search { flex: 1; background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 8px 11px; border-radius: 9px; font-size: 13px; outline: none; }
+.bitvf-search:focus { border-color: var(--accentA); }
+.bitvf-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
 
-.bitvf-controls2 { display: flex; align-items: center; gap: 10px; padding: 8px 14px 10px; }
-.bitvf-search {
-  flex: 1; background: #20222c; border: 1px solid #2e313f; color: #eef0f6;
-  padding: 8px 11px; border-radius: 9px; font-size: 13px; outline: none;
-}
-.bitvf-search:focus { border-color: #7c3aed; }
-.bitvf-count { font-size: 11px; color: #8a8fa3; white-space: nowrap; }
+.bitvf-lbl { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-right: 8px; }
+.bitvf-period { padding: 2px 14px 6px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.bitvf-periodbtns, .bitvf-sortbtns { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+.bitvf-periodbtns button, .bitvf-sortbtns button { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); padding: 5px 10px; border-radius: 999px; font-size: 12px; cursor: pointer; transition: all .12s ease; }
+.bitvf-periodbtns button:hover, .bitvf-sortbtns button:hover { border-color: #4f5468; }
+.bitvf-periodbtns button.active, .bitvf-sortbtns button.active { background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; border-color: transparent; font-weight: 600; }
+.bitvf-custom { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 6px; }
+.bitvf-from, .bitvf-to { background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 6px 9px; border-radius: 8px; font-size: 12px; outline: none; color-scheme: dark; }
+.bitvf-light .bitvf-from, .bitvf-light .bitvf-to { color-scheme: light; }
+.bitvf-dash { color: var(--muted2); }
+.bitvf-sortrow { padding: 2px 14px 8px; }
 
-.bitvf-list { flex: 1; overflow-y: auto; padding: 0 8px 8px; }
-.bitvf-list::-webkit-scrollbar { width: 9px; }
-.bitvf-list::-webkit-scrollbar-thumb { background: #2e313f; border-radius: 9px; }
+.bitvf-body { flex: 1; overflow-y: auto; padding: 4px 8px 8px; }
+.bitvf-body::-webkit-scrollbar { width: 9px; }
+.bitvf-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 9px; }
 
-.bitvf-rowhead, .bitvf-row {
-  display: grid;
-  grid-template-columns: 24px 44px 1fr 48px 48px 58px;
-  align-items: center; gap: 8px;
-  padding: 7px 6px;
-}
-.bitvf-rowhead {
-  position: sticky; top: 0; z-index: 1;
-  background: #15161c; color: #8a8fa3; font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
-  border-bottom: 1px solid #2a2c38;
-}
-.bitvf-row { border-bottom: 1px solid #1f212b; }
-.bitvf-row:hover { background: #1b1d26; }
-
-.bitvf-rank { text-align: center; color: #767b91; font-weight: 700; font-size: 12px; }
-.bitvf-thumb-sp { width: 44px; }
-.bitvf-thumb {
-  width: 44px; height: 58px; object-fit: cover; border-radius: 7px; background: #20222c; display: block;
-}
+.bitvf-rowhead, .bitvf-row { display: grid; grid-template-columns: 22px 42px 1fr 52px 50px 70px; align-items: center; gap: 8px; padding: 7px 6px; }
+.bitvf-rowhead { position: sticky; top: 0; z-index: 1; background: var(--bg); color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+.bitvf-row { border-bottom: 1px solid var(--bg2); }
+.bitvf-row:hover { background: var(--bg2); }
+.bitvf-rank { text-align: center; color: var(--muted2); font-weight: 700; font-size: 12px; }
+.bitvf-thumb-sp { width: 42px; }
+.bitvf-thumb { width: 42px; height: 56px; object-fit: cover; border-radius: 7px; background: var(--bg3); display: block; }
 .bitvf-thumb-ph { display: flex; align-items: center; justify-content: center; color: #3a3d4d; font-size: 16px; }
-
 .bitvf-main { min-width: 0; }
-.bitvf-titleline { overflow: hidden; }
-.bitvf-vtitle {
-  color: #eef0f6; text-decoration: none; font-size: 12.5px; font-weight: 500;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
+.bitvf-vtitle { color: var(--text); text-decoration: none; font-size: 12.5px; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 a.bitvf-vtitle:hover { color: #a78bfa; text-decoration: underline; }
-.bitvf-tags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
+.bitvf-meta { margin-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.bitvf-date { font-size: 10px; color: var(--muted); white-space: nowrap; }
 .bitvf-tag { font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 600; white-space: nowrap; cursor: help; }
 .bitvf-tag-repost { background: rgba(37, 99, 235, .18); color: #7db1ff; border: 1px solid rgba(37, 99, 235, .4); }
 .bitvf-tag-more { background: rgba(245, 158, 11, .15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .4); }
+.bitvf-tag-rising { background: rgba(16, 185, 129, .15); color: #34d399; border: 1px solid rgba(16, 185, 129, .4); }
+.bitvf-tag-new { background: rgba(148, 163, 184, .15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, .35); }
+.bitvf-tag-stale { background: rgba(239, 68, 68, .12); color: #f87171; border: 1px solid rgba(239, 68, 68, .35); }
 
-.bitvf-m { text-align: right; font-size: 12.5px; font-weight: 600; color: #dfe2ee; white-space: nowrap; }
-.bitvf-m .bitvf-sub { display: block; font-size: 9.5px; font-weight: 500; color: #767b91; margin-top: 1px; }
-.bitvf-m-save { color: #fff; }
-.bitvf-na { color: #555a6e; }
+.bitvf-actions { margin-top: 5px; display: flex; gap: 5px; }
+.bitvf-act { background: var(--bg3); color: var(--muted); border: 1px solid var(--border2); border-radius: 6px; padding: 2px 7px; font-size: 11px; cursor: pointer; line-height: 1.4; }
+.bitvf-act:hover { color: var(--text); border-color: #4f5468; }
+.bitvf-repbtn { font-size: 10px; color: #34d399; }
 
-.bitvf-foot {
-  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
-  border-top: 1px solid #2a2c38; background: #12131a;
-}
-.bitvf-foot button {
-  background: #20222c; color: #c9cde0; border: 1px solid #2e313f;
-  padding: 6px 10px; border-radius: 8px; font-size: 12px; cursor: pointer;
-}
-.bitvf-foot button:hover { background: #262936; }
-.bitvf-export { color: #7db1ff !important; }
+.bitvf-m { text-align: right; font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.bitvf-m .bitvf-sub { display: block; font-size: 9px; font-weight: 500; color: var(--muted2); margin-top: 1px; }
+.bitvf-m-save { color: var(--text); }
+.bitvf-na { color: var(--muted2); }
+
+.bitvf-foot { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-top: 1px solid var(--border); background: var(--bg2); flex-wrap: wrap; }
+.bitvf-foot button { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); padding: 6px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+.bitvf-foot button:hover { background: var(--bg); border-color: #4f5468; }
+.bitvf-harvest { color: #a78bfa !important; }
 .bitvf-clear:hover { color: #ff8585; border-color: #5a2b2b !important; }
-.bitvf-hint { font-size: 10px; color: #6b7088; margin-left: auto; text-align: right; line-height: 1.3; }
 
-.bitvf-empty { text-align: center; padding: 36px 22px; color: #aab0c6; }
-.bitvf-empty-ic {
-  width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff;
-  background: linear-gradient(135deg, #7c3aed, #2563eb);
-}
+.bitvf-empty { text-align: center; padding: 32px 22px; color: var(--text); }
+.bitvf-empty-ic { width: 50px; height: 50px; margin: 0 auto 14px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; background: linear-gradient(135deg, #7c3aed, #2563eb); }
 .bitvf-empty p { margin: 8px 0; }
-.bitvf-empty a { color: #a78bfa; }
-.bitvf-empty-sub { font-size: 11.5px; color: #767b91; }
+.bitvf-empty-sub { font-size: 11.5px; color: var(--muted2); }
+
+.bitvf-tip { margin: 6px 6px 10px; padding: 9px 11px; background: rgba(124, 58, 237, .12); border: 1px solid rgba(124, 58, 237, .3); border-radius: 9px; font-size: 11.5px; color: var(--text); line-height: 1.45; }
+.bitvf-sub2 { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); padding: 8px 6px 6px; font-weight: 600; }
+
+.bitvf-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.bitvf-tbl th { text-align: left; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .4px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.bitvf-tbl td { padding: 6px 8px; border-bottom: 1px solid var(--bg2); }
+.bitvf-tbl td:nth-child(n+2), .bitvf-tbl th:nth-child(n+2) { text-align: right; }
+.bitvf-tbl tr:hover td { background: var(--bg2); }
+
+.bitvf-heat { overflow-x: auto; padding: 4px 2px; }
+.bitvf-heat table { border-collapse: collapse; }
+.bitvf-heat th { font-size: 8px; color: var(--muted2); font-weight: 600; padding: 1px 2px; text-align: center; }
+.bitvf-heat td { width: 15px; height: 16px; border-radius: 2px; border: 1px solid var(--bg); }
+.bitvf-heat tr th:first-child { text-align: right; padding-right: 5px; font-size: 9px; }
+
+.bitvf-toast { position: fixed; right: 24px; bottom: 70px; z-index: 2147483002; background: #111; color: #fff; padding: 11px 16px; border-radius: 10px; font: 500 13px -apple-system, "Segoe UI", Roboto, sans-serif; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; max-width: 320px; }
+.bitvf-toast-show { opacity: 1; transform: translateY(0); }

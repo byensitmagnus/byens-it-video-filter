@@ -1,9 +1,10 @@
 # Byens IT – Video Filter (TikTok)
 
-En Chrome-udvidelse der lader dig **sortere og filtrere dine TikTok-videoer på flest visninger, likes og gemte** – så du nemt ser:
+En gratis Chrome-udvidelse der hjælper TikTok-creators med at finde **deres mest virale videoer** og beslutte **hvad de skal lave mere af** og **hvad de skal reposte** – ved at læse dine egne tal (visninger, likes, gemte, gem-rate, velocity) direkte fra TikTok.
 
-- 🔥 **Hvad du skal lave mere af** (god rækkevidde + høj gem-rate)
-- 🔁 **Hvad du kan reposte** (top på gemte – folk gemmer den for at vende tilbage)
+- 🔥 **Lav mere af** det der virker (rækkevidde + høj gem-rate)
+- 🔁 **Repost-radar** for gamle vindere folk stadig gemmer
+- 📊 Leaderboard, **bedste posting-tid**, hashtag-/lyd-analyse, view-velocity, perioder, watchlist, CSV/JSON-eksport, cover-download og repurpose-tekst
 
 Alt kører **100% lokalt i din browser**. Ingen data sendes nogen steder hen.
 
@@ -27,11 +28,10 @@ Alt kører **100% lokalt i din browser**. Ingen data sendes nogen steder hen.
 Der er to arbejdsgange alt efter hvad du vil finde:
 
 ### A) Mest virale videoer over en bestemt periode  ← det primære
-1. Gå til din profil: `tiktok.com/@byensit.dk`
-2. **Scroll roligt hele vejen ned** igennem dine videoer – mens du browser, fanger udvidelsen automatisk visninger, likes **og udgivelsesdato** pr. video
-3. Klik på den flydende **▼ Byens IT**-knap nederst til højre for at åbne panelet
-4. Vælg en **periode** (Alle / 7 / 28 / 90 dage / I år / Custom datointerval) og sortér på **Visninger** → du ser nu de mest virale videoer i netop den periode
-5. Klik på en titel for at åbne videoen (kræver at dit brugernavn er sat – se nedenfor)
+1. Gå til **din egen profil**: `tiktok.com/@ditbrugernavn`
+2. Åbn panelet med den flydende **▼ Byens IT**-knap og tryk **⤓ Hent hele profilen** (auto-scroll) – eller scroll selv roligt ned. Udvidelsen fanger automatisk visninger, likes, **udgivelsesdato**, hashtags og lyd pr. video
+3. Vælg en **periode** (Alle / 7 / 28 / 90 dage / I år / Custom) og en **fane** (Top, Leaderboard, …), og sortér fx på **Score** eller **Visninger**
+4. Klik på en titel for at åbne videoen (sæt evt. dit brugernavn i pop-up'en til klikbare links)
 
 > **Vigtigt:** kun videoer du har *scrollet forbi* får en dato. Vil du have et komplet periode-billede, så scroll hele profilen igennem mindst én gang. Tæl­leren på knappen (fx `153`) viser hvor mange der er fanget.
 
@@ -42,20 +42,28 @@ Der er to arbejdsgange alt efter hvad du vil finde:
 
 Sæt **dit TikTok-brugernavn** i pop-up'en (klik ikonet), så bliver video-titlerne klikbare links.
 
-### Knapperne i panelet
-| Knap | Gør |
-|------|-----|
-| **Periode** (Alle/7/28/90 dage/I år/Custom) | Filtrér listen til videoer udgivet i den valgte periode |
-| Visninger / Likes / Gemte | Sortér listen efter den valgte måleenhed (flest øverst) |
-| Gem-rate | Gemte delt med visninger – stærkeste signal på "folk vil huske den" |
-| Engagement | (likes + kommentarer + delinger + gemte) / visninger |
-| Søg | Filtrér på tekst i titlen |
-| ⬇︎ CSV | Eksportér listen (inkl. dato) til et regneark (semikolon-separeret, Excel-klar) |
-| Ryd data | Sletter alt indsamlet data fra udvidelsen |
+### Faneblade
+| Fane | Viser |
+|------|-------|
+| **Top** | Alle dine videoer – sortér på Score / Visninger / Likes / Gemte / Gem-rate / Velocity / Nyeste |
+| **Leaderboard** | Gem-rate-leaderboard med percentil-badges (stærkeste "folk vil huske den"-signal) |
+| **Posting-tid** | 7×24 heatmap over hvornår dine videoer klarer sig bedst + top-tidspunkter |
+| **Hashtags & lyd** | Hvilke hashtags og lyde der giver flest gns. visninger |
+| **Repost-radar** | Gamle vindere med høj gem-rate – med 1-klik "✓ Reposted" |
+| **Trends** | Sammenlign perioder (Δ%) + sleeper hits (størst vækst siden sidst) |
+| **★ Watchlist** | Videoer du har stjernemarkeret |
+
+### Knapper & handlinger
+- **Periode** (Alle/7/28/90 dage/I år/Custom) – filtrér på udgivelsesdato
+- **⤓ Hent hele profilen** – auto-scroller hele profilen så alt fanges på ét klik
+- Per video: **☆** watchlist · **⬇** hent cover · **↗** kopiér titel + hashtags (klar til Reels/Shorts)
+- **CSV / JSON** – eksportér den aktive liste (respekterer filtre) · **◐** lys/mørk · **Ryd** – slet alt lokalt
 
 ### Badges
-- **🔁 Repost** – videoen er i top 20% på gemte
-- **🔥 Lav mere** – over middel i visninger *og* i top 30% på gem-rate
+- **🔁 Repost** – top 20% på gemte
+- **🔥 Lav mere** – over middel i visninger *og* top 30% gem-rate
+- **🚀 Stiger** – hurtig vækst siden sidste besøg (sleeper hit)
+- **🆕 Ny** – under 7 dage, for tidligt at dømme · **⚠** – friske tal mangler
 
 ---
 
