@@ -23,7 +23,7 @@
       var r = list[i];
       lines.push([
         i + 1, csvCell(r.title || ""), isoDate(r.created), r.views, r.likes, r.comments, r.shares, r.saves,
-        (r.saveRate * 100).toFixed(2), (r.engagement * 100).toFixed(2),
+        ((r.saveRate || 0) * 100).toFixed(2), ((r.engagement || 0) * 100).toFixed(2),
         (r.velocity != null ? Math.round(r.velocity) : ""), r.score == null ? "" : r.score,
         csvCell(r.musicTitle || ""), csvCell((urlFor && urlFor(r)) || "")
       ].join(";"));

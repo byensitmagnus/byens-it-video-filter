@@ -5,6 +5,31 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.1.0] - 2026-06-09
+
+Smarter, more complete profile harvesting.
+
+### Changed
+- **Rebuilt the "Fetch entire profile" auto-scroller.** It now measures progress by
+  the number of captured videos (not just page height), so it no longer stops early
+  on slow-loading profiles. On a real profile this raised coverage from ~59 to **283
+  videos** (the full catalog) in testing.
+- The harvester **nudges the scroll position** to re-trigger TikTok's lazy-loader when
+  it stalls, and is more patient (longer settle time, higher iteration cap).
+
+### Added
+- **Period-aware harvesting.** When a date filter is active, the harvester stops as
+  soon as it has scrolled past the start of that window — guaranteeing complete data
+  for the chosen dates without scrolling your entire history. The toast reports
+  *"period covered"* when it finishes early.
+
+### Fixed
+- `buildCsv` now guards `SaveRate%` / `Engagement%` against missing values (defensive;
+  matches the JSON export's existing null-safety).
+
+### Notes
+- Still 100% local — no servers, login, tracking, or remote code. Not affiliated with TikTok.
+
 ## [3.0.0] - 2026-06-09
 
 Public open-source release. Rebrand from "Byens IT – Video Filter (TikTok)" to

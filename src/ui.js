@@ -300,14 +300,34 @@
 
   // ---------- auto-scroll ----------
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function oldestCreated() { var v = S.ownVideos(), m = Infinity; for (var k = 0; k < v.length; k++) { var c = v[k].created; if (c && c < m) m = c; } return m === Infinity ? 0 : m; }
+  // Auto-scroll the profile so TikTok lazy-loads every video. Robust against slow
+  // loads: progress is measured by the captured video COUNT (not just page height),
+  // it nudges the scroll position to re-trigger TikTok's lazy-loader when stuck, and
+  // when a period filter is active it stops as soon as it has scrolled past the start
+  // of that window — full coverage for the chosen dates without over-scrolling.
   function harvest(btn) {
     if (harvesting) { harvesting = false; return; }
     harvesting = true; btn.textContent = "⏹ Stop (fetching…)";
-    var lastH = 0, stable = 0, i = 0, cap = 100;
+    var rng = M.getRange(periodPreset, customFrom, customTo, now());
+    var stopBefore = rng[0] > 0 ? rng[0] : 0; // 0 = no period filter → harvest the whole profile
+    var lastH = 0, lastCount = -1, stable = 0, i = 0, cap = 400;
+    function finish(reason) { harvesting = false; btn.textContent = "⤓ Fetch entire profile"; window.scrollTo(0, 0); toast("Fetch done · " + S.ownCount() + " videos" + (reason ? " · " + reason : "")); queueRender(); }
     function step() {
-      if (!harvesting || i >= cap || stable >= 4) { harvesting = false; btn.textContent = "⤓ Fetch entire profile"; window.scrollTo(0, 0); toast("Fetch done · " + S.ownCount() + " videos"); return; }
+      if (!harvesting) { finish(""); return; }
+      if (i >= cap) { finish("limit reached"); return; }
+      var oc = oldestCreated();
+      if (stopBefore && oc && oc <= stopBefore) { finish("period covered"); return; } // window fully loaded
       window.scrollTo(0, document.body.scrollHeight); i++;
-      wait(950).then(function () { var h = document.body.scrollHeight; if (h === lastH) stable++; else { stable = 0; lastH = h; } btn.textContent = "⏹ Stop · " + S.ownCount() + " (" + i + ")"; step(); });
+      wait(1100).then(function () {
+        var h = document.body.scrollHeight, c = S.ownCount();
+        if (h !== lastH || c !== lastCount) { stable = 0; lastH = h; lastCount = c; } else { stable++; }
+        var od = oldestCreated();
+        btn.textContent = "⏹ Stop · " + c + (od ? " · to " + fmtDate(od) : "") + " (" + i + ")";
+        if (stable >= 6) { finish("end of profile"); return; } // genuinely no more videos
+        if (stable > 0) { window.scrollTo(0, Math.max(0, h - 1400)); wait(280).then(step); } // nudge up, then retry
+        else { step(); }
+      });
     }
     step();
   }

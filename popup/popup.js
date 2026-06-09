@@ -1,4 +1,4 @@
-/* Byens IT – Video Filter · popup.js */
+/* TikTok Creator Video Filter · popup.js */
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
