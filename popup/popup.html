@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      width: 290px; margin: 0; padding: 16px;
+      background: #15161c; color: #eef0f6;
+      font: 13px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .hd { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 7px; }
+    .hd .logo {
+      width: 24px; height: 24px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; font-size: 12px;
+    }
+    .d { color: #9aa0b6; margin: 10px 0 14px; }
+    button.act {
+      width: 100%; border: none; border-radius: 10px; padding: 10px; margin-bottom: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer; color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+    }
+    button.act:hover { filter: brightness(1.08); }
+    button.sec {
+      width: 100%; border: 1px solid #2e313f; border-radius: 10px; padding: 9px; margin-bottom: 14px;
+      font-size: 13px; cursor: pointer; color: #c9cde0; background: #20222c;
+    }
+    button.sec:hover { background: #262936; }
+    .row { margin-bottom: 12px; }
+    .row label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #8a8fa3; margin-bottom: 5px; }
+    .row input {
+      width: 100%; box-sizing: border-box; background: #20222c; border: 1px solid #2e313f; color: #eef0f6;
+      padding: 8px 10px; border-radius: 8px; font-size: 13px; outline: none;
+    }
+    .row input:focus { border-color: #7c3aed; }
+    .cnt { font-size: 12px; color: #7db1ff; background: rgba(37,99,235,.12); border: 1px solid rgba(37,99,235,.3); border-radius: 8px; padding: 8px 10px; margin: 0 0 12px; }
+    .tip { font-size: 11.5px; color: #767b91; margin: 0; }
+    .tip b { color: #aab0c6; }
+  </style>
+</head>
+<body>
+  <div class="hd"><span class="logo">▼</span> Byens IT · Video Filter</div>
+  <p class="d">Find dine bedste TikTok-videoer – sortér på visninger, likes og gemte.</p>
+
+  <button class="act" id="open">Åbn TikTok Analytics</button>
+  <button class="sec" id="toggle">Vis / skjul filterpanel</button>
+
+  <div class="row">
+    <label for="user">Dit TikTok-brugernavn (til video-links)</label>
+    <input id="user" type="text" placeholder="byensit" autocomplete="off" spellcheck="false" />
+  </div>
+
+  <p class="cnt" id="cnt">Ingen data endnu</p>
+
+  <p class="tip">Gå til fanen <b>Indhold</b> i Analytics og scroll roligt igennem dine videoer – data fanges automatisk.</p>
+
+  <script src="popup.js"></script>
+</body>
+</html>
