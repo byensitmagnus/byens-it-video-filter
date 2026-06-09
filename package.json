@@ -1,6 +1,6 @@
 {
   "name": "tiktok-creator-video-filter",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Local analytics Chrome extension for your own TikTok videos. Not affiliated with TikTok.",
   "private": true,
   "license": "MIT",

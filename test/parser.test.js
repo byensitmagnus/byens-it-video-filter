@@ -57,6 +57,21 @@ test("hashtagsOf parses hashtags, lowercased, without the #", () => {
   assert.deepStrictEqual(parser.hashtagsOf("no tags here"), []);
 });
 
+test("captures the video file URL when present (for assisted repost download), preferring downloadAddr", () => {
+  const json = { itemList: [{
+    id: "7300000000000000060", desc: "x", stats: { playCount: 100, collectCount: 5 },
+    video: { downloadAddr: { url_list: ["https://v.tiktokcdn.com/clean.mp4"] }, playAddr: "https://v.tiktokcdn.com/play.mp4" }
+  }] };
+  const vids = parser.extractVideos(json);
+  assert.strictEqual(vids.length, 1);
+  assert.strictEqual(vids[0].videoUrl, "https://v.tiktokcdn.com/clean.mp4");
+});
+
+test("videoUrl is empty when the response has no video file URL (e.g. Studio analytics)", () => {
+  const vids = parser.extractVideos({ itemList: [{ id: "7300000000000000061", desc: "y", stats: { playCount: 9, collectCount: 1 } }] });
+  assert.strictEqual(vids[0].videoUrl, "");
+});
+
 test("repurposeText builds a clean caption + hashtags pack", () => {
   assert.strictEqual(parser.repurposeText("Boost FPS now #fps #Gaming"), "Boost FPS now\n\n#fps #gaming");
   assert.strictEqual(parser.repurposeText("plain title, no tags"), "plain title, no tags");

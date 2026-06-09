@@ -68,7 +68,7 @@ The extension requests the minimum permissions required to function:
 | Permission | Why it is needed |
 |---|---|
 | `storage` | To save the captured metrics, time-series snapshots, watchlist, and settings **locally** in your browser via `chrome.storage.local`. |
-| `downloads` | So you can save a video's cover image and export CSV/JSON files to your **own disk** — only when you explicitly click a download or export button. |
+| `downloads` | So you can save a video's cover image, export CSV/JSON files, and download **your own** video (for reposting) to your **own disk** — only when you explicitly click a download or export button. |
 | `host_permissions: https://*.tiktok.com/*` | To run the content script and read TikTok's own JSON responses on the TikTok pages you are already viewing. This is required for the extension to work, and it limits the extension strictly to TikTok. |
 
 The extension does not request access to any site other than TikTok.

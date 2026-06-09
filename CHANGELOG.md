@@ -5,6 +5,27 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.4.0] - 2026-06-09
+
+### Added
+- **↓ Video download in the repost flow (assisted repost loop).** Repost Radar rows now
+  have a "↓ Video" button that downloads your own video file so you can re-upload it via
+  the existing "↻ Repost" flow. The parser now captures the video URL TikTok already
+  sends to the page; the download uses your own clipboard/disk only.
+
+### Notes / important
+- **A fully automatic download→reupload loop is intentionally NOT built.** TikTok's
+  Terms prohibit automated posting outside their official API, so a headless re-upload
+  would risk your account being banned, and it would require login/OAuth/a server —
+  breaking the privacy-first principle. You stay in the publish seat: pick the file,
+  paste the caption, click Post.
+- The captured video URL is TikTok's own, signed and **short-lived** — if the download
+  fails because the link expired, the button points you to TikTok Studio's native
+  **Download** (clean, watermark-free, no expiry).
+- **Chrome Web Store note:** this makes the extension also a media downloader (own
+  videos only), which reviewers scrutinise more. Consider submitting an earlier build
+  first, or be ready to justify it as own-content repurposing. Still 100% local.
+
 ## [3.3.0] - 2026-06-09
 
 ### Added

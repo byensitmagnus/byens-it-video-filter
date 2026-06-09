@@ -278,12 +278,15 @@
     cands.forEach(function (r) { r._ever = r.saveRate * Math.min((r.ageDays || 0) / 30, 4) * (1 + r.pSaves); });
     cands.sort(function (a, b) { return b._ever - a._ever; });
     countEl.textContent = cands.length + " repost candidates";
-    var tip = '<div class="bitvf-tip">🔁 Older videos with a high save-rate that people still save — strong to repost. <b>↻ Repost</b> copies the caption and opens TikTok Upload; click <b>✓ Reposted</b> once it\'s published.</div>';
+    var tip = '<div class="bitvf-tip">🔁 Older videos with a high save-rate that people still save — strong to repost.<br><b>↓ Video</b> downloads the file · <b>↻ Repost</b> copies the caption + opens Upload · <b>✓ Done</b> when published. <i>Auto-reposting isn\'t possible (TikTok login/API) — you stay in the publish seat.</i></div>';
     if (!cands.length) { bodyEl.innerHTML = tip + '<div class="bitvf-empty"><p>No clear repost candidates right now.</p></div>'; return; }
     bodyEl.innerHTML = tip + cands.slice(0, 40).map(function (r, i) {
-      var cols = '<div class="bitvf-m bitvf-m-save">' + pct(r.saveRate) + '</div><div class="bitvf-m">' + fmt(r.saves) + '</div><div class="bitvf-m">' +
+      var cols = '<div class="bitvf-m bitvf-m-save">' + pct(r.saveRate) + '</div><div class="bitvf-m">' + fmt(r.saves) + '</div>' +
+        '<div class="bitvf-m bitvf-repacts">' +
+        '<button class="bitvf-act bitvf-dlvid" data-act="downloadvideo" data-id="' + r.id + '" title="Download this video to re-upload. May carry TikTok&#39;s watermark — for a clean copy use Download in TikTok Studio.">↓ Video</button>' +
         '<button class="bitvf-act bitvf-repnow" data-act="repostnow" data-id="' + r.id + '" title="Copy caption + hashtags and open TikTok Upload in a new tab">↻ Repost</button>' +
-        '<button class="bitvf-act bitvf-repbtn" data-act="reposted" data-id="' + r.id + '" title="Mark as reposted (hides it from the radar for 45 days)">✓ Reposted</button></div>';
+        '<button class="bitvf-act bitvf-repbtn" data-act="reposted" data-id="' + r.id + '" title="Mark as reposted (hides it from the radar for 45 days)">✓ Done</button>' +
+        '</div>';
       return videoRow(r, i, cols);
     }).join("");
   }
@@ -318,7 +321,20 @@
     else if (act === "cover") { X.downloadCover(rec, function (ok) { toast(ok ? "Cover downloaded ⬇" : "Couldn't download cover"); }); }
     else if (act === "repurpose") { repurpose(rec); }
     else if (act === "repostnow") { repostNow(rec); }
+    else if (act === "downloadvideo") { downloadVideo(rec); }
     else if (act === "reposted") { S.markReposted(id); toast("Marked as reposted ✓"); render(); }
+  }
+  // Assisteret download af egen video til repost. Hvis vi har en frisk video-URL,
+  // hentes filen via service workeren; ellers (eller hvis URL'en er udløbet) åbnes
+  // TikTok Studio, hvor TikToks egen Download giver en ren, ikke-udløbende kopi.
+  function downloadVideo(r) {
+    if (r.videoUrl) {
+      toast("Downloading your video ↓ — if it fails the link expired; use Download in TikTok Studio for a clean copy.");
+      X.downloadVideo(r, function (ok) { if (!ok) toast("Couldn't download (link likely expired). Open TikTok Studio · Content and use its Download button."); });
+    } else {
+      try { window.open("https://www.tiktok.com/tiktokstudio/content", "_blank", "noopener"); } catch (e) {}
+      toast("No direct video link captured — opening TikTok Studio · Content so you can Download it there (clean, no watermark).");
+    }
   }
   function findRecord(id) { var l = S.ownVideos(); for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
   function repurpose(r) {

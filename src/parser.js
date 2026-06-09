@@ -79,6 +79,18 @@
     if (obj.video && typeof obj.video === "object") { for (i = 0; i < keys.length; i++) { if (obj.video[keys[i]] != null) { u = pickUrl(obj.video[keys[i]]); if (u) return u; } } }
     return "";
   }
+  // Video-fil-URL til assisteret repost-download (egen video). Foretrækker
+  // downloadAddr (typisk direkte mp4) frem for playAddr. Bemærk: TikToks signerede
+  // URL'er udløber, så den er kun brugbar kort efter capture; den reneste kopi er
+  // TikTok Studios egen Download-knap.
+  function readVideoUrl(obj) {
+    var v = (obj.video && typeof obj.video === "object") ? obj.video : obj;
+    var keys = ["downloadAddr", "download_addr", "playAddr", "play_addr"];
+    var i, u;
+    for (i = 0; i < keys.length; i++) { if (v[keys[i]] != null) { u = pickUrl(v[keys[i]]); if (u) return u; } }
+    for (i = 0; i < keys.length; i++) { if (obj[keys[i]] != null) { u = pickUrl(obj[keys[i]]); if (u) return u; } }
+    return "";
+  }
   function readAuthor(obj) {
     var a = obj.author || obj.authorInfo || obj.user || {};
     var cand = [a.unique_id, a.uniqueId, a.uniqueID, obj.unique_id, obj.uniqueId];
@@ -146,7 +158,7 @@
       id: id, title: title, thumbnail: readCover(obj), author: readAuthor(obj), created: readTime(obj),
       views: views || 0, likes: likes || 0, comments: comments || 0, shares: shares || 0, saves: saves || 0,
       musicId: mu.id, musicTitle: mu.title, musicOriginal: mu.original, duration: readDuration(obj),
-      hasSaves: saves != null, hasViews: views != null
+      videoUrl: readVideoUrl(obj), hasSaves: saves != null, hasViews: views != null
     };
   }
 
@@ -175,6 +187,7 @@
       p.comments = Math.max(p.comments, r.comments); p.shares = Math.max(p.shares, r.shares); p.saves = Math.max(p.saves, r.saves);
       if (!p.title && r.title) p.title = r.title;
       if (!p.thumbnail && r.thumbnail) p.thumbnail = r.thumbnail;
+      if (r.videoUrl) p.videoUrl = r.videoUrl; // behold friskeste video-URL (udløber)
       if (!p.author && r.author) p.author = r.author;
       if (!p.created && r.created) p.created = r.created;
       if (!p.musicId && r.musicId) { p.musicId = r.musicId; p.musicTitle = r.musicTitle; p.musicOriginal = r.musicOriginal; }

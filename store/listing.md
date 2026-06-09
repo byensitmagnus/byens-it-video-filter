@@ -86,7 +86,7 @@ Maintained by Byens IT (<https://byens-it.dk>).
 The extension saves captured video metrics, time-series snapshots, the user's watchlist, and settings locally using `chrome.storage.local`. This is required so the panel can show changes over time and remember the user's preferences between visits. No data is synced or transmitted off the device.
 
 **`downloads`**
-The extension lets the user export their analysis as CSV/JSON files and download a video's cover image to their own disk. The `downloads` permission is used only to write these files, and only when the user explicitly clicks an export or download button. There are no automatic or background downloads.
+The extension lets the user export their analysis as CSV/JSON files, download a video's cover image, and download their **own** video file (to re-upload it themselves) to their own disk. The `downloads` permission is used only to write these files, and only when the user explicitly clicks an export or download button. There are no automatic or background downloads, and the extension never posts or uploads anything on the user's behalf.
 
 **Host permission — `https://*.tiktok.com/*`**
 The extension runs only on TikTok. It needs host access to `https://*.tiktok.com/*` so its content script can read TikTok's own JSON responses (the creator's profile video list and TikTok Studio analytics) on the pages the user is already viewing, and render the on-page analysis panel. Access is strictly limited to TikTok; no other site is requested.

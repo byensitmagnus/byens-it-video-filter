@@ -67,5 +67,14 @@
     catch (e) { if (done) done(false); }
   }
 
-  return { buildCsv: buildCsv, buildJson: buildJson, downloadText: downloadText, downloadCover: downloadCover, stamp: stamp };
+  // Egen video-download (assisteret repost). URL'en er TikToks egen, fanget live;
+  // den kan bære vandmærke og udløber, så done(false) → UI falder tilbage til Studio.
+  function downloadVideo(record, done) {
+    if (!record || !record.videoUrl) { if (done) done(false); return; }
+    var fn = C.DOWNLOAD_PREFIX + "-" + record.id + ".mp4";
+    try { chrome.runtime.sendMessage({ type: "bit-download", url: record.videoUrl, filename: fn, saveAs: true }, function (resp) { void chrome.runtime.lastError; if (done) done(!!(resp && resp.ok)); }); }
+    catch (e) { if (done) done(false); }
+  }
+
+  return { buildCsv: buildCsv, buildJson: buildJson, downloadText: downloadText, downloadCover: downloadCover, downloadVideo: downloadVideo, stamp: stamp };
 });

@@ -86,6 +86,7 @@
       prev.comments = Math.max(prev.comments, r.comments); prev.shares = Math.max(prev.shares, r.shares); prev.saves = Math.max(prev.saves, r.saves);
       if (!prev.title && r.title) prev.title = r.title;
       if (!prev.thumbnail && r.thumbnail) prev.thumbnail = r.thumbnail;
+      if (r.videoUrl) prev.videoUrl = r.videoUrl; // friskeste URL vinder (signeret/udløber)
       if (!prev.author && r.author) prev.author = r.author;
       if (!prev.created && r.created) prev.created = r.created;
       if (!prev.musicId && r.musicId) { prev.musicId = r.musicId; prev.musicTitle = r.musicTitle; prev.musicOriginal = r.musicOriginal; }
