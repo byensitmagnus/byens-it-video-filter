@@ -18,7 +18,7 @@
       void chrome.runtime.lastError;
       if (res && res.bit_settings && res.bit_settings.username) $("user").value = res.bit_settings.username;
       var n = res && res.bit_videos ? Object.keys(res.bit_videos).length : 0;
-      $("cnt").textContent = n ? (n + " videoer indsamlet") : "Ingen data endnu";
+      $("cnt").textContent = n ? (n + " videos collected") : "No data yet";
     });
   } catch (e) {}
 

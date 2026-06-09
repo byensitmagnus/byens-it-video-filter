@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       chrome.downloads.download(
         {
           url: msg.url,
-          filename: msg.filename || "byens-it-video-filter-download",
+          filename: msg.filename || "tiktok-creator-video-filter-download",
           saveAs: !!msg.saveAs
         },
         function (id) {

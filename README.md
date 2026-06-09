@@ -1,104 +1,184 @@
-# Byens IT – Video Filter (TikTok)
+# TikTok Creator Video Filter
 
-En gratis Chrome-udvidelse der hjælper TikTok-creators med at finde **deres mest virale videoer** og beslutte **hvad de skal lave mere af** og **hvad de skal reposte** – ved at læse dine egne tal (visninger, likes, gemte, gem-rate, velocity) direkte fra TikTok.
+A free, privacy-first Chrome extension that turns your own TikTok video data into an on-page analytics panel — entirely in your browser.
 
-- 🔥 **Lav mere af** det der virker (rækkevidde + høj gem-rate)
-- 🔁 **Repost-radar** for gamle vindere folk stadig gemmer
-- 📊 Leaderboard, **bedste posting-tid**, hashtag-/lyd-analyse, view-velocity, perioder, watchlist, CSV/JSON-eksport, cover-download og repurpose-tekst
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
-Alt kører **100% lokalt i din browser**. Ingen data sendes nogen steder hen.
+Sort, rank, and understand your own TikTok videos locally — no account linking, no uploads, no servers.
 
----
-
-## Sådan installerer du den
-
-1. **Hent koden** – enten `git clone https://github.com/byensitmagnus/byens-it-video-filter.git` eller download som ZIP (grøn **Code**-knap → *Download ZIP*) og pak ud
-2. Åbn Chrome og gå til `chrome://extensions`
-3. Slå **Udviklertilstand** til (øverst til højre)
-4. Klik **Indlæs upakket** / *Load unpacked*
-5. Vælg den mappe du hentede (mappen der indeholder `manifest.json`)
-6. Udvidelsen dukker op med det lilla/blå tragt-ikon 📥
-
-> Kræver Chrome (eller Edge) version **111 eller nyere** – den bruger MV3 `world: "MAIN"` til at læse TikToks egne analytics-svar.
+> ⚠️ **Not affiliated with TikTok.** This extension helps creators analyze their own visible TikTok data locally in the browser.
 
 ---
 
-## Sådan bruger du den
+## Screenshot
 
-Der er to arbejdsgange alt efter hvad du vil finde:
+![TikTok Creator Video Filter analytics panel](store/screenshots/panel.png)
 
-### A) Mest virale videoer over en bestemt periode  ← det primære
-1. Gå til **din egen profil**: `tiktok.com/@ditbrugernavn`
-2. Åbn panelet med den flydende **▼ Byens IT**-knap og tryk **⤓ Hent hele profilen** (auto-scroll) – eller scroll selv roligt ned. Udvidelsen fanger automatisk visninger, likes, **udgivelsesdato**, hashtags og lyd pr. video
-3. Vælg en **periode** (Alle / 7 / 28 / 90 dage / I år / Custom) og en **fane** (Top, Leaderboard, …), og sortér fx på **Score** eller **Visninger**
-4. Klik på en titel for at åbne videoen (sæt evt. dit brugernavn i pop-up'en til klikbare links)
+*The analytics panel overlaid on TikTok, showing your top videos, badges, and sorting controls.*
 
-> **Vigtigt:** kun videoer du har *scrollet forbi* får en dato. Vil du have et komplet periode-billede, så scroll hele profilen igennem mindst én gang. Tæl­leren på knappen (fx `153`) viser hvor mange der er fanget.
-
-### B) Gemte (saves) – kræver TikTok Studio
-1. Gå til `tiktok.com/tiktokstudio/analytics` → fanen **Indhold**
-2. Scroll igennem – nu fanges også **gemte** pr. video (de er private og vises kun her)
-3. Sortér på **Gemte** eller **Gem-rate**
-
-Sæt **dit TikTok-brugernavn** i pop-up'en (klik ikonet), så bliver video-titlerne klikbare links.
-
-### Faneblade
-| Fane | Viser |
-|------|-------|
-| **Top** | Alle dine videoer – sortér på Score / Visninger / Likes / Gemte / Gem-rate / Velocity / Nyeste |
-| **Leaderboard** | Gem-rate-leaderboard med percentil-badges (stærkeste "folk vil huske den"-signal) |
-| **Posting-tid** | 7×24 heatmap over hvornår dine videoer klarer sig bedst + top-tidspunkter |
-| **Hashtags & lyd** | Hvilke hashtags og lyde der giver flest gns. visninger |
-| **Repost-radar** | Gamle vindere med høj gem-rate – med 1-klik "✓ Reposted" |
-| **Trends** | Sammenlign perioder (Δ%) + sleeper hits (størst vækst siden sidst) |
-| **★ Watchlist** | Videoer du har stjernemarkeret |
-
-### Knapper & handlinger
-- **Periode** (Alle/7/28/90 dage/I år/Custom) – filtrér på udgivelsesdato
-- **⤓ Hent hele profilen** – auto-scroller hele profilen så alt fanges på ét klik
-- Per video: **☆** watchlist · **⬇** hent cover · **↗** kopiér titel + hashtags (klar til Reels/Shorts)
-- **CSV / JSON** – eksportér den aktive liste (respekterer filtre) · **◐** lys/mørk · **Ryd** – slet alt lokalt
-
-### Badges
-- **🔁 Repost** – top 20% på gemte
-- **🔥 Lav mere** – over middel i visninger *og* top 30% gem-rate
-- **🚀 Stiger** – hurtig vækst siden sidste besøg (sleeper hit)
-- **🆕 Ny** – under 7 dage, for tidligt at dømme · **⚠** – friske tal mangler
+*(screenshots coming — see `store/screenshots/`)*
 
 ---
 
-## Hvorfor skal jeg scrolle? Hvorfor ikke bare hente det hele?
+## Features
 
-TikTok udleverer ikke "gemte" (saves) offentligt – de tal kan **kun** ses af dig som ejer inde i TikTok Studio. Udvidelsen aflæser de samme JSON-svar som Studio selv henter, efterhånden som du scroller. Derfor: jo mere du scroller igennem dine videoer i Analytics, jo mere komplet bliver listen.
+**Analytics panel (tabbed)**
+- **Top list** — sort your videos by Score, Views, Likes, Saves, Save-rate, Velocity, or Newest.
+- **Save-rate Leaderboard** — rank videos by save-rate with percentile badges.
+- **Posting Times** — a 7×24 heatmap built from your post timestamps to spot your best windows.
+- **Hashtags & Sounds** — performance breakdown by hashtag and sound.
+- **Repost Radar** — surfaces older videos worth reposting.
+- **Trends** — compare periods and spot view-velocity "sleeper hits".
+- **Watchlist** — keep an eye on specific videos over time.
+
+**Badges (at a glance)**
+- 🔁 Repost Candidate
+- 🔥 Make More
+- 🚀 Viral Reach
+- 💾 Utility Winner
+- 🆕 Too Early
+- ⚠️ Missing Fresh Data
+
+**Filtering & export**
+- **Period filter** — All, 7, 28, 90 days, This year, or a custom range.
+- **CSV + JSON export** — both respect the active filters.
+- **Cover-image download** — grab the cover for any video.
+- **Repurpose text pack** — ready-to-paste title + hashtags for Reels/Shorts.
+
+**Convenience**
+- **Auto-scroll harvester** — "Fetch entire profile" to pull in your full catalog.
+- **Dark/light theme.**
 
 ---
 
-## Virker der ikke noget?
+## How it works
 
-- **Panelet siger "Ingen data endnu"** → sørg for at du er på `tiktok.com/tiktokstudio` og har åbnet **Indhold/Posts**-fanen, og scroll lidt. Genindlæs evt. siden.
-- **Gemte viser "–"** → den måling fandtes ikke i det svar – du er sandsynligvis på en offentlig profilside i stedet for Studio Analytics.
-- **Tallene matcher ikke 100%** → udvidelsen tager det højeste tal den har set pr. video. Ryd data og scroll igen for et frisk øjebliksbillede.
-- **Intet ikon / fejl ved indlæsning** → tjek at Chrome er ≥ 111 og at hele mappen (med `manifest.json`) blev valgt.
+The extension runs **only on `tiktok.com`** and works entirely inside your browser:
 
----
-
-## Teknisk (kort)
-
-| Fil | Rolle |
-|-----|-------|
-| `manifest.json` | MV3-opsætning, kører kun på `*.tiktok.com` |
-| `src/inject.js` | Kører i sidens kontekst (MAIN world), hooker `fetch`/`XHR` og videresender JSON-svar |
-| `src/content.js` | Normaliserer data, gemmer i `chrome.storage.local`, tegner panelet |
-| `src/panel.css` | Styling (alt prefixet `.bitvf-`) |
-| `popup/*` | Lille pop-up: åbn analytics, vis/skjul panel, sæt brugernavn |
-| `tools/icongen.ps1` | Genererer ikonerne (kun til build, ikke en del af kørslen) |
-
-Feltnavne aflæses fleksibelt (`play_count`, `digg_count`, `collect_count`, osv.), så udvidelsen overlever mindre ændringer i TikToks API. Skifter TikTok markant, kan listerne i `F = { ... }` øverst i `src/content.js` udvides.
+1. **Local read of TikTok's own responses.** A lightweight `fetch`/`XHR` hook observes the JSON that TikTok itself returns to the page — your profile's video list and TikTok Studio analytics. Nothing is requested from a third party; the extension simply parses data the page already loaded.
+2. **Owner filter.** A filter keeps only **your own** videos, so the panel never shows or stores anyone else's content.
+3. **Local time-series snapshots.** As you revisit, small snapshots are saved in `chrome.storage.local` so the panel can compute velocity and trends over time.
+4. **No server.** There is no backend. Nothing is uploaded, no remote code is loaded, and there are no external runtime dependencies. All computation happens on your machine.
 
 ---
 
-## Licens
+## Installation
 
-MIT – brug, kopiér og tilpas frit. Bygget af [Byens IT](https://byens-it.dk).
+Requires **Chrome or Edge 111+**.
 
-*Virker på din egen TikTok-konto. Ingen TikTok-login-data, cookies eller indhold forlader din browser.*
+**Option A — Download the release ZIP**
+1. Go to the [Releases page](https://github.com/byensitmagnus/byens-it-video-filter/releases) and download the latest release ZIP.
+2. Unzip it to a folder you can keep (the extension loads from this folder).
+
+**Option B — Clone the repo**
+```bash
+git clone https://github.com/byensitmagnus/byens-it-video-filter.git
+```
+
+**Then load it in your browser**
+1. Open `chrome://extensions`.
+2. Enable **Developer mode** (top-right toggle).
+3. Click **Load unpacked**.
+4. Select the folder that contains `manifest.json`.
+
+---
+
+## Usage
+
+Get insight in under 30 seconds:
+
+1. Open **TikTok Studio** or your own profile.
+2. **Scroll through your videos** (or click **"Fetch entire profile"** to auto-harvest them all).
+3. The panel **captures the data** as it loads.
+4. **Sort** by Views / Likes / Saves / Save-rate.
+5. **Read the badges** (Repost / Make More / Viral / Utility Winner).
+6. **Export** as CSV or JSON.
+
+---
+
+## Privacy
+
+- **100% local.** All data stays in your browser and is processed on your machine — nothing is sent to any server.
+- **No login, cookie, or token access.** The extension does not read or store your TikTok credentials or session.
+- **No tracking, no analytics, no remote code.**
+- Data is stored only in `chrome.storage.local`, and downloads happen **only** when you click export/download.
+
+See the full [Privacy Policy](./PRIVACY.md) for details.
+
+---
+
+## Permissions explained
+
+| Permission | Why it's needed |
+| --- | --- |
+| `storage` | Saves your analytics snapshots and settings locally in `chrome.storage.local`. |
+| `downloads` | Lets you export CSV/JSON files and download cover images — only when you click. |
+| `host_permissions: https://*.tiktok.com/*` | Restricts the extension to TikTok so it can read the page's own video and analytics responses locally. |
+
+---
+
+## Limitations
+
+- **Saves** are only available via **TikTok Studio** analytics; without Studio data, save-rate metrics are limited.
+- Data only exists for videos **you've actually scrolled past** (or harvested) — the extension reads what the page loads.
+- TikTok may **change field names** at any time, which can break parsing until the extension is updated.
+- **Velocity** needs repeat visits to accumulate meaningful time-series data.
+- This is an **unofficial tool** and may break whenever TikTok changes its site.
+
+---
+
+## Roadmap
+
+Realistic things we'd like to add:
+
+- More badge logic and tunable scoring thresholds.
+- Richer hashtag/sound clustering and recommendations.
+- Additional export formats and saved view presets.
+- Improved resilience to TikTok response changes.
+
+**Out of scope (intentionally):**
+
+- **Watermark-free video download — intentionally OUT OF SCOPE.** Signed media URLs expire, it duplicates TikTok Studio's native download, and the Chrome Web Store scrutinizes media downloaders.
+
+---
+
+## Contributing
+
+PRs welcome! This project is small and approachable.
+
+**Module layout**
+
+| File | Responsibility |
+| --- | --- |
+| `src/constants.js` | Shared constants and thresholds. |
+| `src/parser.js` | Parses TikTok's JSON responses. |
+| `src/metrics.js` | Computes scores, save-rate, velocity, and badges. |
+| `src/storage.js` | Reads/writes `chrome.storage.local` snapshots. |
+| `src/export.js` | CSV/JSON export and cover-image download. |
+| `src/ui.js` | Renders the analytics panel. |
+| `src/content.js` | Content script: hooks, orchestration, and lifecycle. |
+
+**Develop locally**
+
+```bash
+npm install        # install dev dependencies
+npm run lint       # lint the source
+npm test           # run the test suite
+npm run build:zip  # build the distributable ZIP
+```
+
+CI runs **lint + test** on every pull request.
+
+---
+
+## License
+
+Released under the [MIT License](./LICENSE).
+
+---
+
+## Credits
+
+Built and maintained by **Byens IT** (https://byens-it.dk).

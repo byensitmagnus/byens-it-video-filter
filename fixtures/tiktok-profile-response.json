@@ -1,0 +1,47 @@
+{
+  "statusCode": 0,
+  "status_code": 0,
+  "hasMore": true,
+  "cursor": "1700000000000",
+  "itemList": [
+    {
+      "id": "7300000000000000001",
+      "desc": "How to boost your FPS in 30 seconds #gaming #fps #pctips",
+      "createTime": 1709251200,
+      "author": { "id": "100000000000000001", "uniqueId": "creator_demo", "nickname": "Creator Demo" },
+      "music": { "id": "7000000000000000001", "title": "original sound - creator_demo", "original": true },
+      "video": {
+        "id": "v7300000000000000001",
+        "cover": { "urlList": ["https://example-cdn.invalid/cover-1.jpg"] },
+        "duration": 27
+      },
+      "stats": { "playCount": 1250000, "diggCount": 84000, "commentCount": 1200, "shareCount": 5400, "collectCount": 39000 }
+    },
+    {
+      "id": "7300000000000000002",
+      "desc": "Best monitor settings for competitive play #setup #monitor #esports",
+      "createTime": 1706659200,
+      "author": { "id": "100000000000000001", "uniqueId": "creator_demo", "nickname": "Creator Demo" },
+      "music": { "id": "7000000000000000099", "title": "trending track", "original": false },
+      "video": {
+        "id": "v7300000000000000002",
+        "cover": { "urlList": ["https://example-cdn.invalid/cover-2.jpg"] },
+        "duration": 41
+      },
+      "stats": { "playCount": 320000, "diggCount": 12000, "commentCount": 300, "shareCount": 800, "collectCount": 9000 }
+    },
+    {
+      "id": "7300000000000000003",
+      "desc": "Quick build tip you can do today",
+      "createTime": 1711929600,
+      "author": { "id": "100000000000000001", "uniqueId": "creator_demo", "nickname": "Creator Demo" },
+      "music": { "id": "7000000000000000001", "title": "original sound - creator_demo", "original": true },
+      "video": {
+        "id": "v7300000000000000003",
+        "cover": { "urlList": ["https://example-cdn.invalid/cover-3.jpg"] },
+        "duration": 15
+      },
+      "stats": { "playCount": 58000, "diggCount": 2100, "commentCount": 90, "shareCount": 120, "collectCount": 1500 }
+    }
+  ]
+}

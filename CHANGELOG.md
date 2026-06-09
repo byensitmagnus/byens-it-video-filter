@@ -1,9 +1,28 @@
 # Changelog
 
-Alle bemærkelsesværdige ændringer i dette projekt dokumenteres i denne fil.
+All notable changes to this project are documented in this file.
 
-Formatet følger [Keep a Changelog](https://keepachangelog.com/da/1.1.0/),
-og projektet overholder [Semantic Versioning](https://semver.org/lang/da/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
+
+## [3.0.0] - 2026-06-09
+
+Public open-source release. Rebrand from "Byens IT – Video Filter (TikTok)" to
+**TikTok Creator Video Filter** — neutral and usable for any TikTok creator.
+
+### Changed
+- Rebranded to **TikTok Creator Video Filter**; panel UI is now in English.
+- Refactored the monolithic content script into focused modules: `constants`, `parser`, `metrics`, `storage`, `export`, `ui`, `content`.
+- New badge logic: 🔁 Repost Candidate, 🔥 Make More, 🚀 Viral Reach, 💾 Utility Winner, 🆕 Too Early, ⚠️ Missing Fresh Data.
+
+### Added
+- Parser & metrics unit tests with anonymized fixtures (`fixtures/`, `test/`), runnable via `npm test` (Node's built-in test runner, zero dependencies).
+- npm scripts: `lint` (ESLint), `test`, `build:zip` (cross-platform ZIP builder).
+- GitHub Actions CI running lint + test + build on every push and pull request.
+- Public-release docs: English README, `PRIVACY.md`, and a `store/` folder (listing, privacy policy, screenshots guide, submission checklist).
+
+### Notes
+- Still 100% local — no servers, login, cookies, tokens, tracking, or remote code. Not affiliated with TikTok.
 
 ## [2.0.0] - 2026-06-09
 

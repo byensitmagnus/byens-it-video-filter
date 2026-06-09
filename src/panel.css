@@ -79,7 +79,8 @@ a.bitvf-vtitle:hover { color: #a78bfa; text-decoration: underline; }
 .bitvf-tag { font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 600; white-space: nowrap; cursor: help; }
 .bitvf-tag-repost { background: rgba(37, 99, 235, .18); color: #7db1ff; border: 1px solid rgba(37, 99, 235, .4); }
 .bitvf-tag-more { background: rgba(245, 158, 11, .15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .4); }
-.bitvf-tag-rising { background: rgba(16, 185, 129, .15); color: #34d399; border: 1px solid rgba(16, 185, 129, .4); }
+.bitvf-tag-viral { background: rgba(16, 185, 129, .15); color: #34d399; border: 1px solid rgba(16, 185, 129, .4); }
+.bitvf-tag-utility { background: rgba(56, 189, 248, .14); color: #38bdf8; border: 1px solid rgba(56, 189, 248, .4); }
 .bitvf-tag-new { background: rgba(148, 163, 184, .15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, .35); }
 .bitvf-tag-stale { background: rgba(239, 68, 68, .12); color: #f87171; border: 1px solid rgba(239, 68, 68, .35); }
 

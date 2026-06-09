@@ -1,0 +1,23 @@
+{
+  "name": "tiktok-creator-video-filter",
+  "version": "3.0.0",
+  "description": "Local analytics Chrome extension for your own TikTok videos. Not affiliated with TikTok.",
+  "private": true,
+  "license": "MIT",
+  "author": "Byens IT (https://byens-it.dk)",
+  "homepage": "https://github.com/byensitmagnus/byens-it-video-filter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byensitmagnus/byens-it-video-filter.git"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node --test",
+    "build:zip": "node tools/build-zip.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "archiver": "^7.0.1",
+    "eslint": "^9.13.0"
+  }
+}

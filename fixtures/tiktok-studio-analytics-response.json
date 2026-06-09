@@ -1,0 +1,35 @@
+{
+  "statusCode": 0,
+  "message": "ok",
+  "data": {
+    "hasMore": false,
+    "videoList": [
+      {
+        "item_id": "7300000000000000010",
+        "title": "Tutorial: clean install in 5 minutes #tutorial #howto",
+        "create_time": 1708000000,
+        "cover_image": "https://example-cdn.invalid/studio-cover-10.jpg",
+        "statistics": {
+          "play_count": 90000,
+          "like_count": 4200,
+          "comment_count": 110,
+          "share_count": 230,
+          "collect_count": 5100
+        }
+      },
+      {
+        "item_id": "7300000000000000011",
+        "title": "Underrated settings most people miss",
+        "create_time": 1705000000,
+        "cover_image": "https://example-cdn.invalid/studio-cover-11.jpg",
+        "statistics": {
+          "play_count": 47000,
+          "like_count": 1900,
+          "comment_count": 60,
+          "share_count": 80,
+          "collect_count": 3300
+        }
+      }
+    ]
+  }
+}

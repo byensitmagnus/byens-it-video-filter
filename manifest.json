@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Byens IT – Video Filter (TikTok)",
-  "version": "2.0.0",
-  "description": "Find dine mest virale TikTok-videoer: sortér på visninger, likes, gemte, gem-rate, velocity og periode – leaderboard, bedste posting-tid, hashtag-analyse, repost-radar og mere.",
+  "name": "TikTok Creator Video Filter",
+  "version": "3.0.0",
+  "description": "Local analytics for your own TikTok videos: views, likes, saves, save-rate, leaderboard & repost radar. Not affiliated with TikTok.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -12,7 +12,7 @@
   "host_permissions": ["https://*.tiktok.com/*"],
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "Byens IT – Video Filter",
+    "default_title": "TikTok Creator Video Filter",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -32,7 +32,15 @@
     },
     {
       "matches": ["https://*.tiktok.com/*"],
-      "js": ["src/content.js"],
+      "js": [
+        "src/constants.js",
+        "src/parser.js",
+        "src/metrics.js",
+        "src/storage.js",
+        "src/export.js",
+        "src/ui.js",
+        "src/content.js"
+      ],
       "css": ["src/panel.css"],
       "run_at": "document_idle",
       "world": "ISOLATED",

@@ -1,10 +1,13 @@
-# Privacy Policy
+# Privacy Policy — TikTok Creator Video Filter
 
 **Extension:** TikTok Creator Video Filter
 **Publisher / Maintainer:** Byens IT ([byens-it.dk](https://byens-it.dk))
 **License:** MIT (free and open source)
 **Source code:** <https://github.com/byensitmagnus/byens-it-video-filter>
 **Effective date:** 2026-06-09
+
+This page is the public, hosting-ready copy of our privacy policy and is the document referenced by the Chrome Web Store "Privacy policy URL" field. The canonical raw URL is:
+`https://raw.githubusercontent.com/byensitmagnus/byens-it-video-filter/main/store/privacy-policy.md`
 
 ---
 
