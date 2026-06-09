@@ -14,7 +14,7 @@
 
   var K = C.STORAGE_KEYS, DAY = C.DAY;
   var videos = {}, snapshots = {}, watchlist = {};
-  var settings = { username: "", owner: "", theme: "dark", activeTab: "top" };
+  var settings = { username: "", owner: "", theme: "dark", activeTab: "top", bufferKey: "", bufferOrgId: "", bufferChannelId: "", bufferChannelName: "" };
   // Runtime-signal (ikke persisteret): seneste parse-sundhed, så UI kan vise et
   // brugbart brud-banner i stedet for at fejle lydløst, hvis TikTok ændrer format.
   var parseHealth = { ok: true, looked: 0, unreadable: 0, at: 0 };
@@ -106,6 +106,12 @@
   function setUsername(name) { settings.username = (name || "").trim().replace(/^@/, ""); saveSettings(); pruneNonOwn(); }
   function setTheme(theme) { settings.theme = theme; saveSettings(); }
   function setActiveTab(tab) { settings.activeTab = tab; saveSettings(); }
+  function setBuffer(cfg) { settings = Object.assign(settings, cfg || {}); saveSettings(); }
+  // Genindlæs settings fra storage (fx når popup'en har ændret Buffer-config).
+  function reloadSettings(cb) {
+    try { chrome.storage.local.get(K.settings, function (res) { void chrome.runtime.lastError; if (res && res[K.settings]) settings = Object.assign(settings, res[K.settings]); if (cb) cb(); }); }
+    catch (e) { if (cb) cb(); }
+  }
   function getSettings() { return settings; }
   function snapshotCount() { var n = 0; for (var k in snapshots) { if (has(snapshots, k)) n += snapshots[k].length; } return n; }
   function clearAll() { videos = {}; snapshots = {}; persist(); }
@@ -119,7 +125,7 @@
     ownVideos: ownVideos, ownCount: ownCount,
     getVelocity: getVelocity, upsert: upsert, snapshotCount: snapshotCount,
     isWatched: isWatched, setWatch: setWatch, markReposted: markReposted, getReposted: getReposted,
-    setUsername: setUsername, setTheme: setTheme, setActiveTab: setActiveTab, getSettings: getSettings,
+    setUsername: setUsername, setTheme: setTheme, setActiveTab: setActiveTab, setBuffer: setBuffer, reloadSettings: reloadSettings, getSettings: getSettings,
     clearAll: clearAll, setParseHealth: setParseHealth, getParseHealth: getParseHealth
   };
 });

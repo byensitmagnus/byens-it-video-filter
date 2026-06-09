@@ -26,6 +26,12 @@
     .tip b { color: #aab0c6; }
     .foot { font-size: 10.5px; color: #5b6173; border-top: 1px solid #23252f; padding-top: 9px; }
     .foot a { color: #8a8fa3; }
+    .buf { margin: 0 0 12px; border: 1px solid #2e313f; border-radius: 10px; padding: 8px 10px; background: #1a1c24; }
+    .buf summary { cursor: pointer; font-size: 12px; font-weight: 600; color: #fbbf24; }
+    .buf .tip { margin: 8px 0; }
+    .buf select { width: 100%; box-sizing: border-box; background: #20222c; border: 1px solid #2e313f; color: #eef0f6; padding: 8px 10px; border-radius: 8px; font-size: 13px; }
+    #bufstatus.ok { color: #34d399; }
+    #bufstatus.err { color: #f87171; }
   </style>
 </head>
 <body>
@@ -42,10 +48,26 @@
 
   <p class="cnt" id="cnt">No data yet</p>
 
+  <details class="buf">
+    <summary>⤴ Auto-repost via Buffer (optional)</summary>
+    <p class="tip">Off by default. If you add your own <b>Buffer</b> API key, the panel's Repost Radar gets a <b>⤴ Buffer</b> button that queues a video to Buffer, which auto-publishes to TikTok via TikTok's official API. This is the only feature that contacts an external service, and only when you click. Your key is stored locally.</p>
+    <div class="row">
+      <label for="bufkey">Buffer personal API key</label>
+      <input id="bufkey" type="password" placeholder="Paste from publish.buffer.com/settings/api" autocomplete="off" spellcheck="false" />
+    </div>
+    <button class="sec" id="bufconnect" type="button">Connect &amp; load TikTok channels</button>
+    <div class="row" id="bufchanrow" style="display:none">
+      <label for="bufchan">TikTok channel to post to</label>
+      <select id="bufchan"></select>
+    </div>
+    <p class="tip" id="bufstatus" style="display:none"></p>
+  </details>
+
   <p class="tip">Open <b>your profile</b> and click <b>⤓ Fetch entire profile</b> in the panel. <b>Saves</b> are only available via TikTok Studio · Analytics → Content.</p>
 
   <div class="foot">100% local · no servers · <b>Not affiliated with TikTok</b>.<br />Built by <a href="https://byens-it.dk" target="_blank" rel="noopener">Byens IT</a> · MIT</div>
 
+  <script src="../src/buffer.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

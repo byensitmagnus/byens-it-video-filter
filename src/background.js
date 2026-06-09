@@ -32,6 +32,23 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     return true; // async svar
   }
 
+  // OPT-IN Buffer-kald. UI sender en færdigbygget request-deskriptor (fra
+  // src/buffer.js); workeren udfører det krydsoprindelses-fetch (kun api.buffer.com
+  // via host_permissions). Intet sendes nogensinde uden brugerens klik.
+  if (msg.type === "bit-buffer" && msg.request && /^https:\/\/api\.buffer\.com\//.test(msg.request.url + "/")) {
+    try {
+      fetch(msg.request.url, { method: msg.request.method || "POST", headers: msg.request.headers, body: msg.request.body })
+        .then(function (r) { return r.text().then(function (t) { return { status: r.status, text: t }; }); })
+        .then(function (res) {
+          var json = null; try { json = JSON.parse(res.text); } catch (e) { /* ignore */ }
+          var gqlErr = json && json.errors && json.errors.length ? json.errors[0].message : null;
+          sendResponse({ ok: res.status >= 200 && res.status < 300 && !gqlErr, status: res.status, data: json, error: gqlErr });
+        })
+        .catch(function (e) { sendResponse({ ok: false, error: String(e) }); });
+    } catch (e) { sendResponse({ ok: false, error: String(e) }); }
+    return true; // async svar
+  }
+
   if (msg.type === "bit-badge") {
     try {
       var n = msg.count || 0;

@@ -16,7 +16,7 @@ module.exports = [
         // Browser / extension content-script globals
         window: "readonly", document: "readonly", self: "readonly", navigator: "readonly",
         location: "readonly", URL: "readonly", Blob: "readonly", console: "readonly",
-        setTimeout: "readonly", clearTimeout: "readonly", chrome: "readonly",
+        setTimeout: "readonly", clearTimeout: "readonly", chrome: "readonly", fetch: "readonly", BITVF: "readonly",
         // Node (UMD wrapper, tests, build script)
         module: "writable", require: "readonly", process: "readonly", __dirname: "readonly"
       }

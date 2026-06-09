@@ -56,7 +56,8 @@ Paste-ready copy for the Chrome Web Store submission. Field-by-field.
 **100% local & privacy-first**
 
 - Reads only TikTok's own JSON responses, locally in your browser, for **your own videos**.
-- Nothing is sent to any server. No tracking, no analytics, no ads, no remote code, no external runtime dependencies.
+- Nothing is sent to any server by default. No tracking, no analytics, no ads, no remote code.
+- **Optional Buffer auto-repost (off by default):** if you add your own Buffer API key, the extension can send a post's caption + media URL to Buffer (`api.buffer.com`) when you click ⤴ Buffer, so Buffer publishes it to TikTok via TikTok's official API. Disabled until you enable it; your key stays local.
 - Does **not** read or store your TikTok login, cookies, tokens, or passwords.
 - Data is stored only in `chrome.storage.local` and stays on your device. Downloads happen only when you click export/download.
 - Free and open source (MIT). Read every line at <https://github.com/byensitmagnus/byens-it-video-filter>.
@@ -91,14 +92,23 @@ The extension lets the user export their analysis as CSV/JSON files, download a 
 **Host permission — `https://*.tiktok.com/*`**
 The extension runs only on TikTok. It needs host access to `https://*.tiktok.com/*` so its content script can read TikTok's own JSON responses (the creator's profile video list and TikTok Studio analytics) on the pages the user is already viewing, and render the on-page analysis panel. Access is strictly limited to TikTok; no other site is requested.
 
+**Host permission — `https://api.buffer.com/*` (optional feature)**
+Used only by the optional, off-by-default Buffer auto-repost integration. If the user adds their own Buffer API key and clicks "⤴ Buffer", the extension calls Buffer's API to queue the user's own post. No request is made to this host unless the user enables and uses the feature. The extension never posts to TikTok itself and never acts without a user click.
+
 **Are you using remote code? NO.**
-The extension does not load or execute any remote code. All code ships inside the package, there are no external scripts, no `eval` of remote content, and no external runtime dependencies. The extension makes no network requests of its own.
+The extension does not load or execute any remote code. All code ships inside the package, there are no external scripts, and no `eval` of remote content. The only outbound network call the extension can make is to Buffer's API (`api.buffer.com`), and only when the user has enabled the optional Buffer integration and clicks to post — this transfers data, not code.
 
 ---
 
 ## Data collection disclosures (Privacy practices form)
 
-- **Does this item collect or use user data?** No data is collected, transmitted, or stored off the user's device.
+> **If you ship the optional Buffer integration:** disclose that, when the user enables it,
+> the extension transmits the user's own post content (caption + media URL) to Buffer at the
+> user's request to publish on their behalf. If you prefer the simplest possible privacy
+> review, ship the build **without** the Buffer integration and the statements below apply
+> as-is.
+
+- **Does this item collect or use user data?** No data is collected. By default nothing is transmitted off the user's device; the only optional transmission is the user's own post content to their own Buffer account, at the user's explicit request, when the Buffer integration is enabled.
 - **Personally identifiable information:** Not collected.
 - **Health information:** Not collected.
 - **Financial and payment information:** Not collected.

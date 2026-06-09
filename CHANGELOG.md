@@ -5,6 +5,37 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.5.0] - 2026-06-09
+
+### Added
+- **⤴ Auto-repost via Buffer (opt-in, off by default).** You can now connect your own
+  Buffer account (paste a personal Buffer API key in the popup). Once connected, each
+  Repost Radar candidate gets a **⤴ Buffer** button that queues the video + caption to
+  Buffer, which then auto-publishes to TikTok via TikTok's **official** Content Posting
+  API — the ToS-compliant way to automate posting. This is the closest to a fully
+  automatic repost loop that can be done safely.
+
+### Changed — IMPORTANT privacy note
+- This is the **first feature that can contact an external server.** It is **off until
+  you add a Buffer key**, the only host it can reach is `api.buffer.com` (added to
+  host_permissions), and it only sends data **when you click ⤴ Buffer**. Your API key is
+  stored locally in `chrome.storage.local` and is sent only to Buffer. With Buffer left
+  unconfigured, the extension remains 100% local exactly as before. PRIVACY.md and the
+  store listing are updated to disclose this.
+
+### How it works (no server of ours)
+- Uses a **personal Buffer API key** (no OAuth client secret, no backend of ours). The
+  cross-origin call runs in the MV3 service worker. The video is sent as the captured
+  TikTok media URL; if Buffer can't fetch it (expired/region-locked), use ↓ Video +
+  Buffer's own upload.
+- **Not yet live-verified end-to-end** against a real Buffer account in this build — the
+  GraphQL shapes are implemented to Buffer's current docs (endpoint, channels query,
+  createPost mutation, May-2026 asset format). Use the popup's "Connect" to validate your
+  key/channel; the first real publish is your explicit click.
+- **Chrome Web Store:** sending content to a third party materially changes the data
+  disclosures — consider shipping a pre-Buffer build to the store first, or be ready to
+  document the Buffer data flow in the privacy form.
+
 ## [3.4.0] - 2026-06-09
 
 ### Added

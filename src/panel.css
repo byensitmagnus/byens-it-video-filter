@@ -94,6 +94,7 @@ a.bitvf-vtitle:hover { color: #a78bfa; text-decoration: underline; }
 .bitvf-repbtn { font-size: 10px; color: #34d399; }
 .bitvf-repnow { font-size: 10px; color: #a78bfa; }
 .bitvf-dlvid { font-size: 10px; color: #7db1ff; }
+.bitvf-bufpost { font-size: 10px; color: #fbbf24; }
 
 .bitvf-m { text-align: right; font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; }
 .bitvf-m .bitvf-sub { display: block; font-size: 9px; font-weight: 500; color: var(--muted2); margin-top: 1px; }

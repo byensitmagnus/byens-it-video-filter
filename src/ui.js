@@ -6,10 +6,10 @@
 ;(function (root, factory) {
   "use strict";
   function dep(name) { return (typeof require === "function") ? require("./" + name + ".js") : (root.BITVF && root.BITVF[name]); }
-  var api = factory(dep("constants"), dep("storage"), dep("metrics"), dep("parser"), dep("export"));
+  var api = factory(dep("constants"), dep("storage"), dep("metrics"), dep("parser"), dep("export"), dep("buffer"));
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   if (typeof self !== "undefined") { root.BITVF = root.BITVF || {}; root.BITVF.ui = api; }
-})(typeof self !== "undefined" ? self : this, function (C, S, M, P, X) {
+})(typeof self !== "undefined" ? self : this, function (C, S, M, P, X, B) {
   "use strict";
 
   var DAY = C.DAY;
@@ -280,11 +280,14 @@
     countEl.textContent = cands.length + " repost candidates";
     var tip = '<div class="bitvf-tip">🔁 Older videos with a high save-rate that people still save — strong to repost.<br><b>↓ Video</b> downloads the file · <b>↻ Repost</b> copies the caption + opens Upload · <b>✓ Done</b> when published. <i>Auto-reposting isn\'t possible (TikTok login/API) — you stay in the publish seat.</i></div>';
     if (!cands.length) { bodyEl.innerHTML = tip + '<div class="bitvf-empty"><p>No clear repost candidates right now.</p></div>'; return; }
+    var bufOn = !!(S.getSettings().bufferKey && S.getSettings().bufferChannelId);
     bodyEl.innerHTML = tip + cands.slice(0, 40).map(function (r, i) {
+      var bufBtn = bufOn ? '<button class="bitvf-act bitvf-bufpost" data-act="bufferpost" data-id="' + r.id + '" title="Queue this video to Buffer → auto-publish to TikTok via Buffer\'s official API">⤴ Buffer</button>' : '';
       var cols = '<div class="bitvf-m bitvf-m-save">' + pct(r.saveRate) + '</div><div class="bitvf-m">' + fmt(r.saves) + '</div>' +
         '<div class="bitvf-m bitvf-repacts">' +
         '<button class="bitvf-act bitvf-dlvid" data-act="downloadvideo" data-id="' + r.id + '" title="Download this video to re-upload. May carry TikTok&#39;s watermark — for a clean copy use Download in TikTok Studio.">↓ Video</button>' +
         '<button class="bitvf-act bitvf-repnow" data-act="repostnow" data-id="' + r.id + '" title="Copy caption + hashtags and open TikTok Upload in a new tab">↻ Repost</button>' +
+        bufBtn +
         '<button class="bitvf-act bitvf-repbtn" data-act="reposted" data-id="' + r.id + '" title="Mark as reposted (hides it from the radar for 45 days)">✓ Done</button>' +
         '</div>';
       return videoRow(r, i, cols);
@@ -322,7 +325,24 @@
     else if (act === "repurpose") { repurpose(rec); }
     else if (act === "repostnow") { repostNow(rec); }
     else if (act === "downloadvideo") { downloadVideo(rec); }
+    else if (act === "bufferpost") { bufferPost(rec); }
     else if (act === "reposted") { S.markReposted(id); toast("Marked as reposted ✓"); render(); }
+  }
+  // OPT-IN: queue videoen til Buffer (som auto-publicerer til TikTok via deres API).
+  // Sender caption + den fangede video-URL; kun ved brugerens klik.
+  function bufferPost(r) {
+    var s = S.getSettings();
+    if (!s.bufferKey || !s.bufferChannelId) { toast("Connect Buffer first — open the extension popup and add your Buffer API key."); return; }
+    if (!r.videoUrl) { toast("No video link captured for this one yet — open the video so the panel captures it, then try again."); return; }
+    toast("Sending to Buffer…");
+    var req = B.createPostRequest(s.bufferKey, { channelId: s.bufferChannelId, text: P.repurposeText(r.title), videoUrl: r.videoUrl });
+    try {
+      chrome.runtime.sendMessage({ type: "bit-buffer", request: req }, function (resp) {
+        void chrome.runtime.lastError;
+        if (resp && resp.ok) { S.markReposted(r.id); toast("Queued to Buffer ⤴ — it will publish to TikTok on your Buffer schedule."); render(); }
+        else { toast("Buffer error: " + ((resp && resp.error) || "request failed") + " — check your key/channel in the popup."); }
+      });
+    } catch (e) { toast("Couldn't reach Buffer."); }
   }
   // Assisteret download af egen video til repost. Hvis vi har en frisk video-URL,
   // hentes filen via service workeren; ellers (eller hvis URL'en er udløbet) åbnes

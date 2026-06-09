@@ -100,7 +100,7 @@ Get insight in under 30 seconds:
 
 ## Privacy
 
-- **100% local.** All data stays in your browser and is processed on your machine — nothing is sent to any server.
+- **100% local by default.** All data stays in your browser and is processed on your machine — nothing is sent to any server. (The one exception is the **optional** Buffer auto-repost integration, which is off until you add your own Buffer API key; see [PRIVACY.md](./PRIVACY.md) §6b.)
 - **No login, cookie, or token access.** The extension does not read or store your TikTok credentials or session.
 - **No tracking, no analytics, no remote code.**
 - Data is stored only in `chrome.storage.local`, and downloads happen **only** when you click export/download.
@@ -116,6 +116,7 @@ See the full [Privacy Policy](./PRIVACY.md) for details.
 | `storage` | Saves your analytics snapshots and settings locally in `chrome.storage.local`. |
 | `downloads` | Lets you export CSV/JSON files, download cover images, and download **your own** video for reposting — only when you click. |
 | `host_permissions: https://*.tiktok.com/*` | Restricts the extension to TikTok so it can read the page's own video and analytics responses locally. |
+| `host_permissions: https://api.buffer.com/*` | **Optional, off by default.** Only used if you enable the Buffer auto-repost integration with your own Buffer API key — then the extension can queue a post to Buffer when you click ⤴ Buffer. No calls otherwise. |
 
 ---
 

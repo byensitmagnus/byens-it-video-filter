@@ -10,7 +10,9 @@
 
 ## In short
 
-This extension stores **everything locally on your own computer** (in `chrome.storage.local`). It transmits **nothing** to any server. There is **no** analytics, no telemetry, no tracking, no ads, no remote code, and no selling of data. It only reads the TikTok data that TikTok already sends to the page in your browser, and it only processes **your own videos** as the logged-in creator. You can delete everything at any time using the **"Clear"** button in the panel or by uninstalling the extension.
+By default this extension stores **everything locally on your own computer** (in `chrome.storage.local`) and transmits **nothing** to any server. There is **no** analytics, no telemetry, no tracking, no ads, no remote code, and no selling of data. It only reads the TikTok data that TikTok already sends to the page in your browser, and it only processes **your own videos** as the logged-in creator. You can delete everything at any time using the **"Clear"** button in the panel or by uninstalling the extension.
+
+**One optional exception — the Buffer integration (off by default):** if you choose to enable auto-reposting by adding your own Buffer API key, the extension will send a video's caption and media URL to **Buffer** (`api.buffer.com`) — and only then, and only when you click the **⤴ Buffer** button — so Buffer can publish it to TikTok via TikTok's official API. See Section 6b. If you never enable it, nothing ever leaves your device.
 
 > **Not affiliated with TikTok.** This extension helps creators analyze their own visible TikTok data locally in the browser. It is not official and is not endorsed by, sponsored by, or connected to TikTok in any way.
 
@@ -57,9 +59,9 @@ To be explicit, the extension does **not**:
 - Show ads.
 - Sell, rent, or share your data with anyone.
 - Load or execute remote code, or download any code at runtime.
-- Make any external network calls of its own.
+- Make any external network calls of its own — **except** the optional Buffer integration in Section 6b, which is off unless you enable it.
 
-The only information the extension touches is the TikTok metric data described in Section 2, and it stays on your device.
+Other than the optional, user-enabled Buffer integration (Section 6b), the only information the extension touches is the TikTok metric data described in Section 2, and it stays on your device.
 
 ## 5. Permissions and why they are needed
 
@@ -70,16 +72,39 @@ The extension requests the minimum permissions required to function:
 | `storage` | To save the captured metrics, time-series snapshots, watchlist, and settings **locally** in your browser via `chrome.storage.local`. |
 | `downloads` | So you can save a video's cover image, export CSV/JSON files, and download **your own** video (for reposting) to your **own disk** — only when you explicitly click a download or export button. |
 | `host_permissions: https://*.tiktok.com/*` | To run the content script and read TikTok's own JSON responses on the TikTok pages you are already viewing. This is required for the extension to work, and it limits the extension strictly to TikTok. |
+| `host_permissions: https://api.buffer.com/*` | **Only used by the optional Buffer integration (Section 6b), which is off by default.** Lets the extension call Buffer's API to queue your post — only after you add a Buffer key and click ⤴ Buffer. No request is ever made to this host unless you enable and use the feature. |
 
-The extension does not request access to any site other than TikTok.
+Apart from the optional Buffer integration, the extension does not request access to any site other than TikTok.
 
 ## 6. Downloads happen only on explicit user action
 
 The extension never downloads anything in the background. A file is written to your disk **only** when you click an export or download control yourself — for example "CSV", "JSON", or the per-video cover download. No automatic or silent downloads occur.
 
+## 6b. Optional Buffer integration (off by default)
+
+The extension can optionally help you **auto-repost** your own videos through
+[Buffer](https://buffer.com), a social-media scheduling service that publishes to TikTok
+via TikTok's **official** Content Posting API. This feature is **disabled until you turn
+it on**, and works entirely with **your own** Buffer account:
+
+- You generate a **personal API key** in your own Buffer account and paste it into the
+  extension popup. The key is stored **locally** in `chrome.storage.local` and is sent
+  **only** to Buffer (`api.buffer.com`), never to us or anyone else.
+- When — and only when — you click the **⤴ Buffer** button on a repost candidate, the
+  extension sends that video's **caption and media URL** to Buffer so Buffer can queue
+  and publish it. No data is sent at any other time.
+- The only external host the extension can reach for this is `api.buffer.com` (declared
+  in `host_permissions`). The extension itself **never** posts to TikTok, and never acts
+  without your click.
+- Buffer's own handling of your data is governed by **Buffer's** privacy policy. If you
+  never add a Buffer key, none of this applies and the extension stays 100% local.
+
 ## 7. Third-party sharing
 
-**None.** No data is shared with Byens IT, with TikTok beyond your normal use of their site, or with any other third party. The extension has no servers and makes no calls to Byens IT or any other endpoint.
+**None, except the optional Buffer integration you explicitly enable (Section 6b).** No
+data is shared with Byens IT, with TikTok beyond your normal use of their site, or with
+any other third party. The extension has no servers of its own and makes no calls to
+Byens IT or any other endpoint.
 
 ## 8. Data retention and deletion
 

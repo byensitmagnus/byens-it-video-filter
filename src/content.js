@@ -55,6 +55,13 @@
     });
   } catch (e) {}
 
+  // Popup'en kan ændre Buffer-config i storage — genindlæs så panelet opdateres.
+  try {
+    chrome.storage.onChanged.addListener(function (changes, area) {
+      if (area === "local" && changes.bit_settings) { S.reloadSettings(function () { UI.queueRender(); }); }
+    });
+  } catch (e) {}
+
   // TikTok ships initial data inline (SIGI_STATE / __UNIVERSAL_DATA__)
   function scanInlineState() {
     var sels = ["#SIGI_STATE", "#__UNIVERSAL_DATA_FOR_REHYDRATION__", 'script[type="application/json"]'];
