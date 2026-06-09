@@ -5,6 +5,41 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.2.0] - 2026-06-09
+
+Correctness, trust, and Chrome Web Store readiness. Still 100% local — no new tracking,
+servers, or remote code.
+
+### Changed
+- **Store-facing name is now "Creator Video Filter for TikTok"** (trademark-safe "X for
+  TikTok" form). "Built by Byens IT" remains maintainer credit only.
+
+### Fixed
+- **Percentile small-sample inflation.** With few videos, percentile-based badges
+  (Viral / Make More / Utility / Repost) and the 0–100 score were unreliable — a single
+  video scored 100 and looked "viral". They are now gated by a minimum sample size; below
+  it, strong badges are hidden and the score shows as "~" with a "limited data" note.
+- **CSV formula injection.** Cells beginning with `= + - @` (or tab/CR) are prefixed with
+  `'` so a crafted caption or sound name can't execute as a formula in Excel/Sheets.
+- **Silent parser breakage.** Parse warnings reset per capture (no more permanently stuck
+  banner), and responses that look like videos but can't be parsed (an ID or field-name
+  change) raise a clear, actionable warning instead of failing silently.
+- **Velocity sort** no longer treats a real velocity of 0 as "no data".
+
+### Added
+- **Badge legend** ("?" button) explaining all six badges and the score.
+- **Data-quality indicators:** a "no date" chip on undated videos — which are surfaced as
+  *hidden* (not silently dropped) when a date filter is active — plus a panel hint when no
+  save data is in view (saves require TikTok Studio · Analytics → Content).
+- Unit tests for small-sample scoring, CSV escaping, and parser reset/breakage detection
+  (13 → 23 tests).
+- `docs/PRODUCT_STRATEGY.md` — full product/scope strategy document.
+
+### Notes
+- Still 100% local — no servers, login, tracking, or remote code. Not affiliated with TikTok.
+- Chrome Web Store screenshots remain to be captured (see `store/screenshots/`) — the one
+  remaining item before submission.
+
 ## [3.1.0] - 2026-06-09
 
 Smarter, more complete profile harvesting.

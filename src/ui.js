@@ -27,6 +27,22 @@
   function videoUrl(r) { var u = r.author || S.ownerId(); return u ? ("https://www.tiktok.com/@" + u + "/video/" + r.id) : null; }
   function asc(a, b) { return a - b; }
 
+  // Kort, creator-venlig forklaring af badges + score (vises via "?"-knappen).
+  function legendHtml() {
+    return '<div class="bitvf-legend-h">What the badges mean</div>' +
+      '<ul class="bitvf-legend-l">' +
+      '<li><span class="bitvf-tag bitvf-tag-viral">🚀 Viral</span> Top ~10% of your videos by views.</li>' +
+      '<li><span class="bitvf-tag bitvf-tag-more">🔥 Make More</span> Above-median views <i>and</i> a high save-rate — make more like this.</li>' +
+      '<li><span class="bitvf-tag bitvf-tag-utility">💾 Utility</span> High save-rate without huge views — people save it to use later.</li>' +
+      '<li><span class="bitvf-tag bitvf-tag-repost">🔁 Repost</span> 14+ days old and still saved a lot — strong to repost.</li>' +
+      '<li><span class="bitvf-tag bitvf-tag-new">🆕 Too Early</span> Under 7 days old — too soon to judge.</li>' +
+      '<li><span class="bitvf-tag bitvf-tag-stale">⚠️</span> Missing fresh data — open it in TikTok Studio · Analytics, or scroll past it.</li>' +
+      '</ul>' +
+      '<div class="bitvf-legend-h">Score &amp; data</div>' +
+      '<div class="bitvf-legend-note">Score is a 0–100 blend of views (55%) and save-rate (45%), ranked against your other videos. It needs ~' + C.BADGE.minSampleSize + '+ videos to be reliable — below that, strong badges are hidden and the score shows as “~”.</div>' +
+      '<div class="bitvf-legend-note">💾 Saves &amp; save-rate come only from <b>TikTok Studio · Analytics → Content</b>.</div>';
+  }
+
   function buildList(applyPeriod, applySearch) {
     var t = now();
     var l = S.ownVideos().map(function (r) { return M.deriveOne(r, S.getVelocity(r.id), t); });
@@ -38,7 +54,7 @@
   }
   function sorter(key) {
     if (key === "created") return function (a, b) { return (b.created || 0) - (a.created || 0); };
-    if (key === "velocity") return function (a, b) { return (b.velocity || -1) - (a.velocity || -1); };
+    if (key === "velocity") return function (a, b) { var av = a.velocity == null ? -Infinity : a.velocity, bv = b.velocity == null ? -Infinity : b.velocity; return bv - av; };
     return function (a, b) { return (b[key] || 0) - (a[key] || 0); };
   }
 
@@ -56,9 +72,10 @@
     root.innerHTML =
       '<div class="bitvf-head">' +
         '<div class="bitvf-title"><span class="bitvf-logo">▼</span> Creator Video Filter</div>' +
-        '<div class="bitvf-headbtns"><button class="bitvf-theme" type="button" title="Light/dark">◐</button><button class="bitvf-x" type="button" title="Close">✕</button></div>' +
+        '<div class="bitvf-headbtns"><button class="bitvf-help" type="button" title="What do the badges mean?">?</button><button class="bitvf-theme" type="button" title="Light/dark">◐</button><button class="bitvf-x" type="button" title="Close">✕</button></div>' +
       '</div>' +
       '<div class="bitvf-tabs"></div>' +
+      '<div class="bitvf-legend bitvf-hidden">' + legendHtml() + '</div>' +
       '<div class="bitvf-warn bitvf-hidden"></div>' +
       '<div class="bitvf-controls2"><input class="bitvf-search" type="search" placeholder="Search title/text…" /><span class="bitvf-count"></span></div>' +
       '<div class="bitvf-period"><span class="bitvf-lbl">Period</span><div class="bitvf-periodbtns"></div>' +
@@ -94,6 +111,7 @@
     root.querySelector(".bitvf-to").addEventListener("change", function (e) { customTo = e.target.value || ""; periodPreset = "custom"; updatePeriodButtons(); render(); });
     root.querySelector(".bitvf-search").addEventListener("input", function (e) { searchTerm = (e.target.value || "").toLowerCase(); render(); });
     root.querySelector(".bitvf-x").addEventListener("click", function () { toggle(false); });
+    root.querySelector(".bitvf-help").addEventListener("click", function () { root.querySelector(".bitvf-legend").classList.toggle("bitvf-hidden"); });
     root.querySelector(".bitvf-theme").addEventListener("click", toggleTheme);
     root.querySelector(".bitvf-csv").addEventListener("click", exportCsv);
     root.querySelector(".bitvf-json").addEventListener("click", exportJson);
@@ -126,8 +144,8 @@
   // ---------- render dispatch ----------
   function render() {
     ensurePanel();
-    var warn = root.querySelector(".bitvf-warn"), w = P.getWarnings();
-    if (w > 8) { warn.classList.remove("bitvf-hidden"); warn.textContent = "⚠️ Some numbers couldn't be read (" + w + ") — TikTok may have changed its format. Data may be incomplete."; }
+    var warn = root.querySelector(".bitvf-warn"), ph = S.getParseHealth();
+    if (ph && ph.ok === false) { warn.classList.remove("bitvf-hidden"); warn.textContent = "⚠️ Couldn't read TikTok's data on the last load — TikTok may have changed its format. Try reloading the page; numbers may be incomplete."; }
     else warn.classList.add("bitvf-hidden");
     if (!S.ownCount()) { renderEmpty(); countEl.textContent = "0 videos"; return; }
     if (activeTab === "top") renderTop();
@@ -160,18 +178,28 @@
     var url = videoUrl(r), titleTxt = escapeHtml(r.title || "(untitled)");
     var titleCell = url ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener" class="bitvf-vtitle">' + titleTxt + '</a>' : '<span class="bitvf-vtitle">' + titleTxt + '</span>';
     var thumb = r.thumbnail ? '<img class="bitvf-thumb" src="' + escapeHtml(r.thumbnail) + '" loading="lazy" referrerpolicy="no-referrer" alt="" />' : '<div class="bitvf-thumb bitvf-thumb-ph">▼</div>';
-    var meta = (r.created ? '<span class="bitvf-date">📅 ' + fmtDate(r.created) + '</span>' : '');
+    var meta = (r.created ? '<span class="bitvf-date">📅 ' + fmtDate(r.created) + '</span>' : '<span class="bitvf-dq" title="No publish date — this video is hidden from date filters">📅 no date</span>');
     return '<div class="bitvf-row"><div class="bitvf-rank">' + (idx + 1) + '</div>' + thumb +
       '<div class="bitvf-main"><div class="bitvf-titleline">' + titleCell + '</div><div class="bitvf-meta">' + meta + badgesHtml(r) + '</div>' + rowActions(r) + '</div>' + cols + '</div>';
   }
 
   function renderTop() {
-    var l = buildList(true, true); countEl.textContent = l.length + " / " + S.ownCount() + " videos";
+    var l = buildList(true, true);
+    var hiddenUndated = (periodPreset !== "all") ? S.ownVideos().filter(function (r) { return !r.created; }).length : 0;
+    countEl.textContent = l.length + " / " + S.ownCount() + " videos" + (hiddenUndated ? " · " + hiddenUndated + " no-date hidden" : "");
     l.sort(sorter(currentSort));
+    var notes = "";
+    if (l.length && l.length < C.BADGE.minSampleSize)
+      notes += '<div class="bitvf-tip">📉 Limited data: only ' + l.length + ' video(s) in view. Score and badges need ~' + C.BADGE.minSampleSize + '+ videos to be reliable, so strong badges are hidden and the score shows as “~”.</div>';
+    if (l.length && !l.some(function (r) { return r.hasSaves; }))
+      notes += '<div class="bitvf-tip">💾 No save data in view yet — saves &amp; save-rate come from <b>TikTok Studio · Analytics → Content</b>.</div>';
+    if (hiddenUndated)
+      notes += '<div class="bitvf-tip">📅 ' + hiddenUndated + ' video(s) have no publish date and are hidden by the date filter — switch to <b>All</b> to include them.</div>';
     var head = '<div class="bitvf-rowhead"><div class="bitvf-rank">#</div><div class="bitvf-thumb-sp"></div><div class="bitvf-main">Video</div><div class="bitvf-m">Views</div><div class="bitvf-m">Likes</div><div class="bitvf-m">Saves</div></div>';
-    bodyEl.innerHTML = head + l.map(function (r, i) {
+    bodyEl.innerHTML = notes + head + l.map(function (r, i) {
       var save = r.hasSaves ? fmt(r.saves) + '<span class="bitvf-sub">' + pct(r.saveRate) + '</span>' : '<span class="bitvf-na">–</span>';
-      var sub = currentSort === "velocity" && r.velocity != null ? '<span class="bitvf-sub">+' + fmt(Math.round(r.velocity)) + '/d</span>' : (currentSort === "score" ? '<span class="bitvf-sub">' + r.score + 'p</span>' : '');
+      var scoreLbl = r.lowSample ? '<span class="bitvf-sub bitvf-sub-weak" title="Limited data — needs ~' + C.BADGE.minSampleSize + '+ videos to be reliable">~' + r.score + 'p</span>' : '<span class="bitvf-sub">' + r.score + 'p</span>';
+      var sub = currentSort === "velocity" && r.velocity != null ? '<span class="bitvf-sub">+' + fmt(Math.round(r.velocity)) + '/d</span>' : (currentSort === "score" ? scoreLbl : '');
       var cols = '<div class="bitvf-m">' + fmt(r.views) + sub + '</div><div class="bitvf-m">' + fmt(r.likes) + '</div><div class="bitvf-m bitvf-m-save">' + save + '</div>';
       return videoRow(r, i, cols);
     }).join("");

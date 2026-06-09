@@ -1,5 +1,5 @@
 /*
- * Byens IT – Video Filter
+ * TikTok Creator Video Filter
  * inject.js  (kører i MAIN world / sidens egen kontekst)
  *
  * Hooker fetch() og XMLHttpRequest så vi kan opfange de JSON-svar TikTok

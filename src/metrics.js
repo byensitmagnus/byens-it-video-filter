@@ -46,25 +46,33 @@
     var rs = pctlRanker(list.map(function (r) { return r.saves; }));
     var rvel = pctlRanker(list.map(function (r) { return r.velocity; }).filter(function (v) { return v != null; }));
     var medViews = quantile(list.map(function (r) { return r.views; }).sort(asc), 0.5);
+    // Percentiler er kun meningsfulde med nok datapunkter. Under tærsklen
+    // gates de stærke (percentil-baserede) badges, og score markeres svag.
+    var enough = list.length >= B.minSampleSize;
     for (var i = 0; i < list.length; i++) {
       var r = list[i];
       r.pViews = rv(r.views); r.pSaveRate = rsr(r.saveRate); r.pSaves = rs(r.saves);
       r.pVel = (r.velocity != null) ? rvel(r.velocity) : 0;
       r.score = Math.round(100 * (0.55 * r.pViews + 0.45 * r.pSaveRate));
-      r.badges = computeBadges(r, medViews);
+      r.sampleN = list.length;
+      r.lowSample = !enough;
+      r.badges = computeBadges(r, medViews, enough);
     }
     return list;
   }
 
-  function computeBadges(r, medViews) {
+  // enough = nok datapunkter til at percentil-baserede badges er pålidelige.
+  // Default true så direkte kald (uden decorate) bevarer hidtidig adfærd.
+  function computeBadges(r, medViews, enough) {
+    if (enough === undefined) enough = true;
     var out = [];
-    if (r.ageDays != null && r.ageDays >= B.repostAgeDays && (r.pSaves >= B.repostPctl || r.pSaveRate >= B.repostPctl) && r.saves > 0)
+    if (enough && r.ageDays != null && r.ageDays >= B.repostAgeDays && (r.pSaves >= B.repostPctl || r.pSaveRate >= B.repostPctl) && r.saves > 0)
       out.push({ t: "🔁 Repost", c: "repost", title: "Repost Candidate: 14+ days old and high on saves / save-rate — strong to repost." });
-    if (r.views > medViews && r.pSaveRate >= B.makeMoreSavePctl && r.saveRate > 0)
+    if (enough && r.views > medViews && r.pSaveRate >= B.makeMoreSavePctl && r.saveRate > 0)
       out.push({ t: "🔥 Make More", c: "more", title: "Make More: above-median views and high save-rate — make more like this." });
-    if (r.pViews >= B.viralViewsPctl)
+    if (enough && r.pViews >= B.viralViewsPctl)
       out.push({ t: "🚀 Viral", c: "viral", title: "Viral Reach: top percentile on views." });
-    if (r.pSaveRate >= B.utilitySavePctl && r.saveRate > 0 && r.pViews < B.utilityMaxViewsPctl)
+    if (enough && r.pSaveRate >= B.utilitySavePctl && r.saveRate > 0 && r.pViews < B.utilityMaxViewsPctl)
       out.push({ t: "💾 Utility", c: "utility", title: "Utility Winner: high save-rate even without huge views — people save it for later." });
     if (r.ageDays != null && r.ageDays < B.tooEarlyDays)
       out.push({ t: "🆕 Too Early", c: "new", title: "Too Early: under 7 days old — don't judge it harshly yet." });

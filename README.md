@@ -1,6 +1,8 @@
-# TikTok Creator Video Filter
+# Creator Video Filter for TikTok
 
 A free, privacy-first Chrome extension that turns your own TikTok video data into an on-page analytics panel — entirely in your browser.
+
+> Store name: **Creator Video Filter for TikTok** · maintained by **Byens IT**. Not affiliated with TikTok.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
@@ -14,11 +16,9 @@ Sort, rank, and understand your own TikTok videos locally — no account linking
 
 ## Screenshot
 
-![TikTok Creator Video Filter analytics panel](store/screenshots/panel.png)
-
-*The analytics panel overlaid on TikTok, showing your top videos, badges, and sorting controls.*
-
-*(screenshots coming — see `store/screenshots/`)*
+> 📸 Screenshots are captured per the guide in [`store/screenshots/`](store/screenshots/README.md).
+> Once `store/screenshots/panel.png` exists it renders here automatically — the analytics
+> panel overlaid on TikTok, showing your top videos, badges, and sorting controls.
 
 ---
 

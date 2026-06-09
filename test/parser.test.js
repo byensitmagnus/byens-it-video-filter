@@ -78,3 +78,29 @@ test("dedupes by id keeping the highest metric values", () => {
   assert.strictEqual(vids[0].views, 400);
   assert.strictEqual(vids[0].saves, 5);
 });
+
+test("getStats resets per extractVideos call and reports parsed count", () => {
+  parser.extractVideos({ itemList: [{ id: "7300000000000000051", desc: "y", stats: { playCount: 10, collectCount: 1 } }] });
+  assert.strictEqual(parser.getStats().parsed, 1);
+  // A subsequent call with no videos must reset the counters, not accumulate.
+  parser.extractVideos({ foo: "bar" });
+  const st = parser.getStats();
+  assert.strictEqual(st.parsed, 0);
+  assert.strictEqual(st.looked, 0);
+  assert.strictEqual(st.unreadable, 0);
+});
+
+test("breakage detection: stat-container objects with unreadable ids are flagged", () => {
+  // Objects that look like videos (have a stat container) but whose id is not a
+  // 6+ digit number -> 0 parsed, flagged as unreadable (likely TikTok format change).
+  const json = { itemList: [
+    { id: "abc", stats: { foo: 1 } },
+    { id: "xyz", statistics: { bar: 2 } },
+    { id: "qwe", stats: { baz: 3 } }
+  ] };
+  const vids = parser.extractVideos(json);
+  assert.strictEqual(vids.length, 0);
+  const st = parser.getStats();
+  assert.strictEqual(st.parsed, 0);
+  assert.ok(st.unreadable >= 3, "look-alike videos with bad ids should be flagged unreadable");
+});

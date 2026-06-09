@@ -16,6 +16,16 @@
     if (!json || typeof json !== "object") return;
     S.detectOwner(location.pathname);
     var recs = P.extractVideos(json);
+    // Brud-signal: et svar der tydeligt indeholdt video/stat-objekter men gav 0
+    // records → TikTok har sandsynligvis ændret feltnavne/ID-format. En sund
+    // parse rydder signalet igen, så banneret ikke hænger permanent.
+    var st = P.getStats();
+    if (st.parsed > 0) {
+      S.setParseHealth({ ok: true, looked: st.looked, unreadable: st.unreadable, at: Date.now() });
+    } else if (st.unreadable >= 3) {
+      S.setParseHealth({ ok: false, looked: st.looked, unreadable: st.unreadable, at: Date.now() });
+      UI.queueRender(); // vis brud-banner selv når intet kunne gemmes
+    }
     if (!recs.length) return;
     for (var i = 0; i < recs.length; i++) S.upsert(recs[i]);
     S.persist();

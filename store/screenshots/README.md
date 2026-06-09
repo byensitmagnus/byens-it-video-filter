@@ -1,6 +1,12 @@
 # Store Screenshots
 
-Screenshots for the Chrome Web Store listing of **TikTok Creator Video Filter**.
+Screenshots for the Chrome Web Store listing of **Creator Video Filter for TikTok**.
+
+> **STATUS: not yet captured.** This folder currently contains only this guide — no
+> image files. The Chrome Web Store requires **at least one** screenshot, so capturing
+> these is the one hard blocker before submission. Do **not** ship placeholder/fake
+> images; capture real ones with the steps below (ideally after loading the v3.2.0
+> build so the new badge legend and data-quality hints are visible).
 
 ## Required sizes
 
@@ -9,31 +15,42 @@ The Chrome Web Store accepts screenshots in one of these dimensions:
 - **1280×800** (recommended — sharper, fills the listing carousel) or
 - **640×400**
 
-Use PNG (preferred) or JPEG, in a **1.6 : 1** aspect ratio. You can upload up to 5 screenshots. Capture on a clean TikTok page with the panel open, and crop/scale to exactly one of the sizes above (don't stretch). Avoid showing real follower-identifying private data if you'd rather not — a demo/test creator account works well.
+PNG (preferred) or JPEG, **1.6 : 1** aspect ratio. Up to 5 screenshots. Capture on a
+clean TikTok page with the panel open, then crop/scale to **exactly** one of the sizes
+above (don't stretch). A demo/test creator account avoids showing private data.
 
-## Screenshot ideas (6 — pick your best 5)
+## Exact capture procedure (to hit 1280×800 cleanly)
 
-1. **`panel.png` — The on-page panel (Top list with badges)**
-   The floating panel open over the creator's own profile, Top tab active, videos sorted by Score, with the smart badges visible (🔁 Repost, 🔥 Make more, 🚀 Rising, 🆕 New). This is the hero shot.
+1. Open `https://www.tiktok.com/@<your-handle>` in Chrome and open the panel (click the
+   floating **▼ Filter** button).
+2. Click **⤓ Fetch entire profile** so the panel has a full, realistic dataset.
+3. Set the browser window so the captured area is ≥ 1280×800 (e.g. zoom to 100%, window
+   width ≥ 1300px). The panel sits on the right; frame it with some TikTok page context
+   on the left so the shot reads as "analytics on top of TikTok".
+4. Capture the region, then crop/resize to exactly **1280×800** (any image editor, or
+   `magick input.png -resize 1280x800^ -gravity center -extent 1280x800 panel.png`).
+5. Save into this folder using the names below.
 
-2. **`leaderboard.png` — Save-rate Leaderboard**
-   The Leaderboard tab showing videos ranked by save-rate with percentile badges. Caption idea: "Find the content people actually save."
+Tip: open the **?** legend (top-right of the panel) for the hero shot so reviewers
+immediately understand the badges.
 
-3. **`posting-times.png` — Posting-times heatmap**
-   The 7×24 heatmap of best posting days/times plus the top time slots. Caption idea: "Post when your audience is watching."
+## Shot list (capture 5–6, use your best 5)
 
-4. **`hashtags-sounds.png` — Hashtags & Sounds**
-   The Hashtags & Sounds tab showing which hashtags and sounds drive the most average views. Caption idea: "Double down on what's working."
-
-5. **`repost-radar.png` — Repost Radar**
-   The Repost Radar tab listing older high-save-rate winners with the one-click "✓ Reposted" control. Caption idea: "Re-share proven hits."
-
-6. **`csv-export.png` — CSV / JSON export**
-   The export controls in action (CSV/JSON buttons), making the point that everything stays local and is only downloaded when you click. Caption idea: "Export your own data — 100% local."
+1. **`panel.png` — Top list with badges (HERO).** Top tab, sorted by Score, badges
+   visible (🚀 Viral, 🔥 Make More, 💾 Utility, 🔁 Repost). Optionally with the **?**
+   legend open. This doubles as the README banner.
+2. **`leaderboard.png` — Save-rate Leaderboard.** Videos ranked by save-rate with
+   "top N%" labels. Caption: "Find the content people actually save."
+3. **`posting-times.png` — Posting-times heatmap.** The 7×24 heatmap + best time slots.
+   Caption: "Post when your audience is watching."
+4. **`hashtags-sounds.png` — Hashtags & Sounds.** Hashtag/sound performance by average
+   views. Caption: "Double down on what's working."
+5. **`repost-radar.png` — Repost Radar.** Older high-save-rate winners with the
+   one-click **✓ Reposted** control. Caption: "Re-share proven hits."
+6. **`csv-export.png` — Export + privacy.** The CSV/JSON controls; emphasise that data
+   stays local and downloads only on click. Caption: "Export your own data — 100% local."
 
 ## File-naming convention
-
-Use lowercase, hyphenated, descriptive names so they sort sensibly and are easy to reference:
 
 ```
 panel.png
@@ -44,8 +61,5 @@ repost-radar.png
 csv-export.png
 ```
 
-Keep this folder as the single source of truth for store imagery.
-
-## Hero image
-
-The repository **README hero image references `store/screenshots/panel.png`**. Make sure that file exists and is the most representative shot (the Top list with badges), since it doubles as both the first store screenshot and the README banner.
+Keep this folder as the single source of truth for store imagery. The README hero image
+points at `store/screenshots/panel.png`, so make that the most representative shot.

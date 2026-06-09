@@ -38,7 +38,11 @@
     viralViewsPctl: 0.9,
     utilitySavePctl: 0.75,
     utilityMaxViewsPctl: 0.7,
-    tooEarlyDays: 7
+    tooEarlyDays: 7,
+    // Min. antal videoer i datasættet før percentil-baserede badges + score
+    // er pålidelige. Under dette gating'es Repost/Make More/Viral/Utility, og
+    // score markeres som "limited data" (percentiler på små N er misvisende).
+    minSampleSize: 8
   };
 
   var TABS = [

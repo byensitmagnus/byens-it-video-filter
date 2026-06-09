@@ -6,12 +6,14 @@ Paste-ready copy for the Chrome Web Store submission. Field-by-field.
 
 ## Store name (≤ 45 chars)
 
-**Primary:**
-`TikTok Creator Video Filter` *(27 chars)*
+**Primary (trademark-safe — "X for TikTok"):**
+`Creator Video Filter for TikTok` *(31 chars)*
 
 **Alternatives:**
-1. `Creator Video Filter for TikTok` *(31 chars)*
-2. `Video Filter — TikTok Creator Stats` *(35 chars)*
+1. `Creator Video Filter — TikTok Stats` *(35 chars)*
+2. `Creator Video Filter` *(20 chars)*
+
+> Do **not** lead the store name with the "TikTok" trademark (e.g. "TikTok Creator Video Filter"). The Chrome Web Store commonly rejects names that start with another product's trademark; the "**X for TikTok**" construction is the safe form. Keep "Built by Byens IT" as maintainer credit only.
 
 ---
 

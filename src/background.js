@@ -1,5 +1,5 @@
 /*
- * Byens IT – Video Filter · background.js (MV3 service worker)
+ * TikTok Creator Video Filter · background.js (MV3 service worker)
  *
  * To opgaver:
  *   1. Download af cover-/thumbnail-billeder (chrome.downloads kan ikke kaldes

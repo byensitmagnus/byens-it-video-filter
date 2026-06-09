@@ -12,7 +12,14 @@
 })(typeof self !== "undefined" ? self : this, function (C) {
   "use strict";
 
-  function csvCell(s) { s = String(s == null ? "" : s).replace(/"/g, '""'); return /[";\n\r]/.test(s) ? '"' + s + '"' : s; }
+  function csvCell(s) {
+    s = String(s == null ? "" : s);
+    // Formula-injection-guard: en celle der starter med = + - @ (eller tab/CR)
+    // kan udføres som formel i Excel/Sheets. Præfiks med ' så den læses som tekst.
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    s = s.replace(/"/g, '""');
+    return /[";\n\r]/.test(s) ? '"' + s + '"' : s;
+  }
   function isoDate(ms) { return ms ? new Date(ms).toISOString().slice(0, 10) : ""; }
 
   // urlFor(record) -> string|null

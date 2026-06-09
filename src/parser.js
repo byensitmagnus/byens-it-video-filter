@@ -14,7 +14,12 @@
   "use strict";
 
   var F = C.FIELDS, STAT = C.STAT_CONTAINERS;
-  var state = { parseWarnings: 0 };
+  // Per-svar-tællere (nulstilles ved hver extractVideos):
+  //   looked   = objekter der LIGNER en video (har en stat-container)
+  //   warnings = lignede en video men kunne ikke parses (intet ID / ingen tal)
+  //   parsed   = faktiske records udtrukket
+  var state = { parseWarnings: 0, looked: 0, parsed: 0 };
+  function resetStats() { state.parseWarnings = 0; state.looked = 0; state.parsed = 0; }
 
   function num(v) {
     if (typeof v === "number") return isFinite(v) ? v : null;
@@ -105,8 +110,17 @@
 
   // Forsøg at lave ét rå objekt om til en video-record. null hvis det ikke ligner.
   function asVideo(obj) {
+    // Stat-container = stærkeste signal for "dette er en video". Bruges både til
+    // advarsler (music/author-objekter har ingen, så de tæller ikke som brud).
+    var hasStat = false;
+    for (var si = 0; si < STAT.length; si++) { if (obj[STAT[si]] && typeof obj[STAT[si]] === "object") { hasStat = true; break; } }
+    if (hasStat) state.looked++;
     var id = readId(obj);
-    if (!id) return null;
+    if (!id) {
+      // Ligner en video (har stats) men intet læsbart ID = sandsynlig ID-formatændring.
+      if (hasStat) state.parseWarnings++;
+      return null;
+    }
     var views = readMetric(obj, F.views);
     var likes = readMetric(obj, F.likes);
     var saves = readMetric(obj, F.saves);
@@ -115,10 +129,7 @@
     var present = [views, likes, saves, comments, shares].filter(function (v) { return v != null; }).length;
     var title = readTitle(obj);
     if (present === 0) {
-      // Tæl kun en advarsel hvis objektet HAR en stat-container men tallene ikke
-      // kunne læses (= sandsynlig formatændring) – ikke for music/author-objekter.
-      var hasStat = false;
-      for (var si = 0; si < STAT.length; si++) { if (obj[STAT[si]] && typeof obj[STAT[si]] === "object") { hasStat = true; break; } }
+      // Stat-container men ingen tal kunne læses (= sandsynlig feltnavn-ændring).
       if (hasStat) state.parseWarnings++;
       return null;
     }
@@ -146,6 +157,7 @@
 
   // Udtræk + dedupér video-records fra et JSON-svar (max-tal vinder ved dubletter).
   function extractVideos(json) {
+    resetStats();
     if (!json || typeof json !== "object") return [];
     var list = walk(json, [], 0);
     var map = {};
@@ -161,16 +173,21 @@
       if (!p.musicId && r.musicId) { p.musicId = r.musicId; p.musicTitle = r.musicTitle; p.musicOriginal = r.musicOriginal; }
       p.hasSaves = p.hasSaves || r.hasSaves; p.hasViews = p.hasViews || r.hasViews;
     }
-    return Object.keys(map).map(function (k) { return map[k]; });
+    var out = Object.keys(map).map(function (k) { return map[k]; });
+    state.parsed = out.length;
+    return out;
   }
 
-  function resetWarnings() { state.parseWarnings = 0; }
+  function resetWarnings() { resetStats(); }
   function getWarnings() { return state.parseWarnings; }
+  // Stats for det seneste extractVideos-kald — bruges til brud-detektion i UI:
+  // mange "looked" men 0 "parsed" = TikTok-format sandsynligvis ændret.
+  function getStats() { return { looked: state.looked, unreadable: state.parseWarnings, parsed: state.parsed }; }
 
   return {
     num: num, readMetric: readMetric, readId: readId, readTitle: readTitle, readTime: readTime,
     readCover: readCover, readAuthor: readAuthor, readMusic: readMusic, readDuration: readDuration,
     hashtagsOf: hashtagsOf, asVideo: asVideo, walk: walk, extractVideos: extractVideos,
-    getWarnings: getWarnings, resetWarnings: resetWarnings
+    getWarnings: getWarnings, resetWarnings: resetWarnings, getStats: getStats
   };
 });

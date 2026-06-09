@@ -15,6 +15,9 @@
   var K = C.STORAGE_KEYS, DAY = C.DAY;
   var videos = {}, snapshots = {}, watchlist = {};
   var settings = { username: "", owner: "", theme: "dark", activeTab: "top" };
+  // Runtime-signal (ikke persisteret): seneste parse-sundhed, så UI kan vise et
+  // brugbart brud-banner i stedet for at fejle lydløst, hvis TikTok ændrer format.
+  var parseHealth = { ok: true, looked: 0, unreadable: 0, at: 0 };
 
   function now() { return Date.now(); }
   function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
@@ -106,6 +109,9 @@
   function snapshotCount() { var n = 0; for (var k in snapshots) { if (has(snapshots, k)) n += snapshots[k].length; } return n; }
   function clearAll() { videos = {}; snapshots = {}; persist(); }
 
+  function setParseHealth(h) { parseHealth = h || { ok: true, looked: 0, unreadable: 0, at: 0 }; }
+  function getParseHealth() { return parseHealth; }
+
   return {
     load: load, persist: persist,
     ownerId: ownerId, isOwn: isOwn, detectOwner: detectOwner, pruneNonOwn: pruneNonOwn,
@@ -113,6 +119,6 @@
     getVelocity: getVelocity, upsert: upsert, snapshotCount: snapshotCount,
     isWatched: isWatched, setWatch: setWatch, markReposted: markReposted, getReposted: getReposted,
     setUsername: setUsername, setTheme: setTheme, setActiveTab: setActiveTab, getSettings: getSettings,
-    clearAll: clearAll
+    clearAll: clearAll, setParseHealth: setParseHealth, getParseHealth: getParseHealth
   };
 });

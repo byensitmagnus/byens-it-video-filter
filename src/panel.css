@@ -1,4 +1,4 @@
-/* Byens IT – Video Filter · panel.css v2 · alt prefixet .bitvf- */
+/* TikTok Creator Video Filter · panel.css · all prefixed .bitvf- */
 
 .bitvf-fab {
   position: fixed; right: 18px; bottom: 18px; z-index: 2147483000;
@@ -31,8 +31,9 @@
 .bitvf-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%); color: #fff; }
 .bitvf-title { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 7px; }
 .bitvf-headbtns { display: flex; gap: 6px; }
-.bitvf-theme, .bitvf-x { background: rgba(255, 255, 255, .15); color: #fff; border: none; width: 26px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 13px; }
-.bitvf-theme:hover, .bitvf-x:hover { background: rgba(255, 255, 255, .3); }
+.bitvf-help, .bitvf-theme, .bitvf-x { background: rgba(255, 255, 255, .15); color: #fff; border: none; width: 26px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.bitvf-help:hover, .bitvf-theme:hover, .bitvf-x:hover { background: rgba(255, 255, 255, .3); }
+.bitvf-help { font-weight: 700; }
 
 .bitvf-tabs { display: flex; gap: 2px; padding: 8px 10px 0; overflow-x: auto; border-bottom: 1px solid var(--border); }
 .bitvf-tabs::-webkit-scrollbar { height: 0; }
@@ -122,3 +123,15 @@ a.bitvf-vtitle:hover { color: #a78bfa; text-decoration: underline; }
 
 .bitvf-toast { position: fixed; right: 24px; bottom: 70px; z-index: 2147483002; background: #111; color: #fff; padding: 11px 16px; border-radius: 10px; font: 500 13px -apple-system, "Segoe UI", Roboto, sans-serif; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; max-width: 320px; }
 .bitvf-toast-show { opacity: 1; transform: translateY(0); }
+
+/* Badge legend (toggled by the ? button) */
+.bitvf-legend { margin: 8px 12px 0; padding: 10px 12px; background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px; font-size: 11.5px; color: var(--text); }
+.bitvf-legend-h { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 700; margin: 2px 0 6px; }
+.bitvf-legend-l { list-style: none; margin: 0 0 4px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.bitvf-legend-l li { display: flex; align-items: baseline; gap: 6px; line-height: 1.4; }
+.bitvf-legend-l .bitvf-tag { flex: none; cursor: default; }
+.bitvf-legend-note { color: var(--muted2); line-height: 1.45; margin-top: 6px; }
+
+/* Data-quality indicators */
+.bitvf-dq { font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 600; white-space: nowrap; cursor: help; background: rgba(148, 163, 184, .14); color: var(--muted); border: 1px solid var(--border2); }
+.bitvf-sub-weak { color: var(--muted2) !important; opacity: .8; cursor: help; }
