@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.2.1] - 2026-06-09
+
+### Fixed
+- **Tab bar no longer clips.** At the panel's default width the 7 tabs needed more
+  room than available, and the scrollbar was hidden — so Trends and ★ Watchlist were
+  invisible and undiscoverable. The tab bar now wraps onto a second row, keeping every
+  tab visible at any panel width.
+
 ## [3.2.0] - 2026-06-09
 
 Correctness, trust, and Chrome Web Store readiness. Still 100% local — no new tracking,

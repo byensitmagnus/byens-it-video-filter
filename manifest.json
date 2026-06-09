@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Creator Video Filter for TikTok",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Local analytics for your own TikTok videos: views, likes, saves, save-rate, leaderboard & repost radar. Not affiliated with TikTok.",
   "icons": {
     "16": "icons/icon16.png",
