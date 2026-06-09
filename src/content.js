@@ -12,17 +12,21 @@
   if (window.__bitVFLoaded) return;
   window.__bitVFLoaded = true;
 
+  var everParsed = false; // har NOGET svar parset videoer i denne side-session?
+
   function ingest(json) {
     if (!json || typeof json !== "object") return;
     S.detectOwner(location.pathname);
     var recs = P.extractVideos(json);
-    // Brud-signal: et svar der tydeligt indeholdt video/stat-objekter men gav 0
-    // records → TikTok har sandsynligvis ændret feltnavne/ID-format. En sund
-    // parse rydder signalet igen, så banneret ikke hænger permanent.
+    // Brud-signal: flag kun hvis INTET svar i denne side-session har kunnet
+    // parses. TikTok-sider sender mange svar med stat-containere der ikke er
+    // videoer (bruger-/hashtag-stats m.fl.) — dem må et sundt item_list-parse
+    // ikke kunne overdøves af. Ved ægte format-brud parser intet → banner.
     var st = P.getStats();
     if (st.parsed > 0) {
+      everParsed = true;
       S.setParseHealth({ ok: true, looked: st.looked, unreadable: st.unreadable, at: Date.now() });
-    } else if (st.unreadable >= 3) {
+    } else if (!everParsed && st.unreadable >= 3) {
       S.setParseHealth({ ok: false, looked: st.looked, unreadable: st.unreadable, at: Date.now() });
       UI.queueRender(); // vis brud-banner selv når intet kunne gemmes
     }
