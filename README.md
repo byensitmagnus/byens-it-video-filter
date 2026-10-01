@@ -182,4 +182,5 @@ Released under the [MIT License](./LICENSE).
 
 ## Credits
 
-Built and maintained by **Byens IT** (https://byens-it.dk).
+Built and maintained by [Magnus Steinmeier Olsen](https://github.com/byensitmagnus), founder of
+**[Byens IT](https://byens-it.dk)**, a Danish gaming-PC and IT company.
